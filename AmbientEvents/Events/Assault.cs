@@ -4,6 +4,7 @@ using System.Linq;
 using Rage;
 using LSPD_First_Response.Mod.API;
 using RichAmbiance.AmbientEvents;
+using RichAmbiance.Utils;
 
 namespace RichAmbiance.Features
 {

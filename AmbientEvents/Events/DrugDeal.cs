@@ -3,6 +3,7 @@ using Rage;
 using LSPD_First_Response.Mod.API;
 using System.Linq;
 using System;
+using RichAmbiance.Utils;
 
 namespace RichAmbiance.AmbientEvents
 {

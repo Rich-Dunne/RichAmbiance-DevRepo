@@ -3,9 +3,13 @@ using Rage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RichAmbiance.Utils;
+using RichAmbiance.PathFind;
 
 namespace RichAmbiance.AmbientEvents
 {
+    using RichAmbiance.Features;
+
     internal class Prostitution : AmbientEvent
     {
         private List<Ped> _prostitutes;
@@ -88,7 +92,7 @@ namespace RichAmbiance.AmbientEvents
                 {
                     //Game.DisplaySubtitle($"Prostitute found.");
                     _prostitute = new EventPed(prostitute, Role.PrimarySuspect, true, BlipSprite.DropOffHooker);
-                    NativeMethods.TaskStartScenarioInPlace(_prostitute, "WORLD_HUMAN_PROSTITUTE_LOW_CLASS");
+                    NativeWrappers.TaskStartScenarioInPlace(_prostitute, "WORLD_HUMAN_PROSTITUTE_LOW_CLASS");
                     return;
                 }
 
@@ -98,8 +102,8 @@ namespace RichAmbiance.AmbientEvents
 
         private bool NearestRoadNodeToPedIsValid(Vector3 position)
         {
-            NativeMethods.GetClosestRoadNodeWithHeading(position, out Vector3 closestRoadNode, out float closestRoadNodeHeading);
-            NativeMethods.GetRoadNodeProperties(closestRoadNode, out int density, out int flags);
+            NativeWrappers.GetClosestRoadNodeWithHeading(position, out Vector3 closestRoadNode, out float closestRoadNodeHeading);
+            NativeWrappers.GetRoadNodeProperties(closestRoadNode, out int density, out int flags);
             _roadNode = closestRoadNode;
             _roadNodeHeading = closestRoadNodeHeading;
             _roadNodeFlags = flags;
@@ -107,8 +111,8 @@ namespace RichAmbiance.AmbientEvents
             if (!position.WithinNearbyRoadNode(_roadNode, _roadNodeHeading))
             {
                 var invertedNode = _roadNode.GetOffset(_roadNodeHeading.Invert(), new Vector3(0, 0, 0));
-                NativeMethods.GetClosestRoadNodeWithHeading(invertedNode, out Vector3 invertedClosestRoadNode, out float invertedClosestRoadNodeHeading);
-                NativeMethods.GetRoadNodeProperties(invertedClosestRoadNode, out int invertedDensity, out int invertedFlags);
+                NativeWrappers.GetClosestRoadNodeWithHeading(invertedNode, out Vector3 invertedClosestRoadNode, out float invertedClosestRoadNodeHeading);
+                NativeWrappers.GetRoadNodeProperties(invertedClosestRoadNode, out int invertedDensity, out int invertedFlags);
 
                 if (!position.WithinNearbyRoadNode(invertedClosestRoadNode, invertedClosestRoadNodeHeading))
                 {
@@ -159,8 +163,8 @@ namespace RichAmbiance.AmbientEvents
                 }
 
                 offsetPosition = RoadPoints[1].IsAlley ? new Vector3(-i, i, 0) : new Vector3(0, i, 0);
-                NativeMethods.GetClosestRoadNodeWithHeading(closestRoadNode.GetOffset(closestRoadNodeHeading, offsetPosition), out Vector3 previousClosestRoadNode, out float previousClosestRoadNodeHeading);
-                NativeMethods.GetRoadNodeProperties(previousClosestRoadNode, out int previousDensity, out int previousFlags);
+                NativeWrappers.GetClosestRoadNodeWithHeading(closestRoadNode.GetOffset(closestRoadNodeHeading, offsetPosition), out Vector3 previousClosestRoadNode, out float previousClosestRoadNodeHeading);
+                NativeWrappers.GetRoadNodeProperties(previousClosestRoadNode, out int previousDensity, out int previousFlags);
 
                 if (!RoadNodeFlagsAreValid(previousFlags))
                 {
@@ -248,23 +252,23 @@ namespace RichAmbiance.AmbientEvents
         {
             foreach (RoadNode roadPoint in roadPoints.Where(x => x != null))
             {
-                NativeMethods.DrawMarker(1, roadPoint.Position, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 255, 255, 65, 100, false, false, false, false);
+                NativeWrappers.DrawMarker(1, roadPoint.Position, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 255, 255, 65, 100, false, false, false, false);
                 if (World.GetAllVehicles().Any(x => x.DistanceTo2D(roadPoint.RoadSidePosition) <= 5))
                 {
-                    NativeMethods.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 255, 65, 65, 100, false, false, false, false);
+                    NativeWrappers.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 255, 65, 65, 100, false, false, false, false);
                     //NativeMethods.DrawMarker(1, _pulloverPosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 65, 255, 65, 100, false, false, false, false);
                 }
                 else if (roadPoints.IndexOf(roadPoint) == 0)
                 {
-                    NativeMethods.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 65, 65, 255, 100, false, false, false, false);
+                    NativeWrappers.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 65, 65, 255, 100, false, false, false, false);
                 }
                 else if (roadPoints.IndexOf(roadPoint) == 2)
                 {
-                    NativeMethods.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 255, 65, 255, 100, false, false, false, false);
+                    NativeWrappers.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 255, 65, 255, 100, false, false, false, false);
                 }
                 else
                 {
-                    NativeMethods.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 65, 255, 65, 100, false, false, false, false);
+                    NativeWrappers.DrawMarker(1, roadPoint.RoadSidePosition, 0, 0, 0, 0, 0, 0, 1f, 1f, 3f, 65, 255, 65, 100, false, false, false, false);
                 }
             }
         }

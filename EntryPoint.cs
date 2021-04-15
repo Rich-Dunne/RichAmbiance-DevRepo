@@ -34,7 +34,7 @@ namespace RichAmbiance
             if (Settings.EnableAmbientEvents)
             {
                 Game.LogTrivial("[RichAmbiance]: AmbientEvents are enabled.");
-                GameFiber.StartNew(() => AmbientEvents.Main(), "RichAmbiance AmbientEvents Fiber");
+                GameFiber.StartNew(() => Features.AmbientEvents.Main(), "RichAmbiance AmbientEvents Fiber");
             }
             else
             {

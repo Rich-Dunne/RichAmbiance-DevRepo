@@ -26,7 +26,7 @@ namespace RichAmbiance
 
         public override void Finally()
         {
-
+            Features.AmbientEvents.ActiveEvent.Cleanup();
         }
 
         private static void InitializeFeatures()

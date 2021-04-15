@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,7 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmbientEvents\AmbientEvent.cs" />
+    <Compile Include="AmbientEvents\EventPed.cs" />
+    <Compile Include="AmbientEvents\Events\Assault.cs" />
+    <Compile Include="AmbientEvents\Events\CarJacking.cs" />
+    <Compile Include="AmbientEvents\Events\DriveBy.cs" />
+    <Compile Include="AmbientEvents\Events\DrugDeal.cs" />
+    <Compile Include="AmbientEvents\Events\Prostitution.cs" />
     <Compile Include="EntryPoint.cs" />
+    <Compile Include="Features\AmbientEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

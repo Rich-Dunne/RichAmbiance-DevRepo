@@ -55,7 +55,7 @@ namespace RichAmbiance.AmbientEvents
                 SelectPedPair();
             }
 
-            Game.LogTrivial($"[RPE Ambient Event]: Unable to find suitable event peds after 100 attempts.  Ending event.");
+            Game.LogTrivial($"[Rich Ambiance]: Unable to find suitable event peds after 100 attempts.  Ending event.");
             TransitionToState(State.Ending);
             return;
         }
@@ -93,18 +93,18 @@ namespace RichAmbiance.AmbientEvents
             WeaponHash[] weaponPool = { WeaponHash.MicroSMG, WeaponHash.APPistol, WeaponHash.CombatPistol, WeaponHash.Pistol, WeaponHash.Pistol50 };
             if (_suspect.Inventory.Weapons.Count == 0)
             {
-                Game.LogTrivial($"[RPE Ambient Event] Giving driver random weapon from pool");
+                Game.LogTrivial($"[Rich Ambiance] Giving driver random weapon from pool");
                 _suspect.Inventory.GiveNewWeapon(weaponPool[new Random().Next(0, weaponPool.Length)], 50, true);
             }
             //foreach (WeaponDescriptor weapon in _suspect.Inventory.Weapons)
             //{
-            //    Game.LogTrivial($"[RPE Ambient Event] Weapon hash: {weapon.Hash}");
+            //    Game.LogTrivial($"[Rich Ambiance] Weapon hash: {weapon.Hash}");
             //}
         }
 
         private void AssignSuspectTasks()
         {
-            Game.LogTrivial($"[RPE Ambient Event] Driver shooting at victim");
+            Game.LogTrivial($"[Rich Ambiance] Driver shooting at victim");
             _suspect.ShootFromVehicle(_victim);
             //Rage.Native.NativeFunction.Natives.x10AB107B887214D8(_suspect, _victim, 0); // vehicle shoot task
             if (_suspect.Blip)
@@ -126,28 +126,28 @@ namespace RichAmbiance.AmbientEvents
                 GameFiber.Yield();
                 if (_suspect == null || _victim == null || !_suspect || !_victim || !_suspect.IsAlive || !_victim.IsAlive || Functions.IsPedGettingArrested(_suspect))
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Suspect or victim is null or dead, or driver is arrested.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Suspect or victim is null or dead, or driver is arrested.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }
 
                 if (Game.LocalPlayer.Character.DistanceTo2D(_suspect) > 150f)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Player is too far away.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player is too far away.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }
 
                 if (_suspect.DistanceTo2D(_victim) > 50f)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Victim is too from suspect.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Victim is too from suspect.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }
 
                 if (Functions.GetActivePursuit() != null && Functions.IsPedInPursuit(_suspect))
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Player is in pursuit of suspect.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player is in pursuit of suspect.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }

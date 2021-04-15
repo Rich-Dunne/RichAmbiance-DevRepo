@@ -65,7 +65,7 @@ namespace RichAmbiance.AmbientEvents
                 SelectBestProstitute();
             }
 
-            Game.LogTrivial($"[RPE Ambient Event]: Unable to find suitable event peds after 100 attempts.  Ending event.");
+            Game.LogTrivial($"[Rich Ambiance]: Unable to find suitable event peds after 100 attempts.  Ending event.");
             TransitionToState(State.Ending);
             return;
         }
@@ -84,7 +84,7 @@ namespace RichAmbiance.AmbientEvents
                 _indexOfNodeToDriveTo = RoadPoints.IndexOf(RoadPoints.First(x => x != null)) + 1;
                 if (!UsablePulloverPositionFound(_indexOfNodeToDriveTo))
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: No good pullover position found for this prostitute.");
+                    Game.LogTrivial($"[Rich Ambiance]: No good pullover position found for this prostitute.");
                     continue;
                 }
 
@@ -423,21 +423,21 @@ namespace RichAmbiance.AmbientEvents
 
                 if (!_prostitute)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Prostitute is null.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Prostitute is null.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }
 
                 if (!_prostitute.IsAlive)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Prostitute is dead.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Prostitute is dead.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }
 
                 if (Game.LocalPlayer.Character.DistanceTo2D(_prostitute) > 150f)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Player is too far away.  Ending event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player is too far away.  Ending event.");
                     TransitionToState(State.Ending);
                     return;
                 }
@@ -445,7 +445,7 @@ namespace RichAmbiance.AmbientEvents
                 if (Game.LocalPlayer.Character.DistanceTo2D(_prostitute.Position) < 10f)
                 {
                     _prostitute.Tasks.Clear();
-                    Game.LogTrivial($"[RPE Ambient Event]: Player is near prostitute, triggering response.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player is near prostitute, triggering response.");
                     if (new Random().Next(10) < 2)
                     {
                         StartPursuit();
@@ -480,14 +480,14 @@ namespace RichAmbiance.AmbientEvents
                 {
                     if (!_john)
                     {
-                        Game.LogTrivial($"[RPE Ambient Event]: John is null.  Ending event.");
+                        Game.LogTrivial($"[Rich Ambiance]: John is null.  Ending event.");
                         TransitionToState(State.Ending);
                         return;
                     }
 
                     if (!_john.IsAlive || !_john.CurrentVehicle)
                     {
-                        Game.LogTrivial($"[RPE Ambient Event]: John is dead or vehicle is invalid.  Ending event.");
+                        Game.LogTrivial($"[Rich Ambiance]: John is dead or vehicle is invalid.  Ending event.");
                         TransitionToState(State.Ending);
                         return;
                     }
@@ -495,7 +495,7 @@ namespace RichAmbiance.AmbientEvents
                     if (Game.LocalPlayer.Character.DistanceTo2D(_john.Position) < 10f)
                     {
                         _john.Tasks.Clear();
-                        Game.LogTrivial($"[RPE Ambient Event]: Player is near John, triggering wander.");
+                        Game.LogTrivial($"[Rich Ambiance]: Player is near John, triggering wander.");
                         _john.Tasks.CruiseWithVehicle(20f, VehicleDrivingFlags.Normal);
                         TransitionToState(State.Ending);
                         return;
@@ -503,7 +503,7 @@ namespace RichAmbiance.AmbientEvents
 
                     if (_john.DistanceTo2D(_prostitute) > 20f)
                     {
-                        Game.LogTrivial($"[RPE Ambient Event]: John is too far from prostitute.");
+                        Game.LogTrivial($"[Rich Ambiance]: John is too far from prostitute.");
                         TransitionToState(State.Ending);
                         return;
                     }
@@ -568,7 +568,7 @@ namespace RichAmbiance.AmbientEvents
                 Functions.AddPedToPursuit(pursuit, _john);
             }
             Functions.SetPursuitIsActiveForPlayer(pursuit, true);
-            Game.LogTrivial($"[RPE Ambient Event]: Pursuit initiated successfully");
+            Game.LogTrivial($"[Rich Ambiance]: Pursuit initiated successfully");
         }
     }
 }

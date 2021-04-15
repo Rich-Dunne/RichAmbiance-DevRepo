@@ -59,13 +59,13 @@ namespace RichAmbiance.AmbientEvents
             {
                 case State.Preparing:
                     AmbientEvents.ActiveEvent = this;
-                    Game.LogTrivial($"[RPE Ambient Event]: Beginning {GetType().Name} event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Beginning {GetType().Name} event.");
                     break;
                 case State.Running:
-                    Game.LogTrivial($"[RPE Ambient Event]: Preparation for {GetType().Name} event complete. Running");
+                    Game.LogTrivial($"[Rich Ambiance]: Preparation for {GetType().Name} event complete. Running");
                     break;
                 case State.Ending:
-                    Game.LogTrivial($"[RPE Ambient Event]: Ending {GetType().Name} event.");
+                    Game.LogTrivial($"[Rich Ambiance]: Ending {GetType().Name} event.");
                     Cleanup();
                     break;
             }

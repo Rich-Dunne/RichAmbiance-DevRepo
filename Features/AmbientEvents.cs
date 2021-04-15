@@ -26,26 +26,26 @@ namespace RichAmbiance.Features
             CommonEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == "common").Select(x => x.Key).ToList());
             UncommonEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == "uncommon").Select(x => x.Key).ToList());
             RareEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == "rare").Select(x => x.Key).ToList());
-            Game.LogTrivial($"[RPE Ambient Event]: Common events: {CommonEvents.Count}, Uncommon events: {UncommonEvents.Count}, Rare events: {RareEvents.Count}");
-            Game.LogTrivial($"[RPE Ambient Event]: Common Frequency: {Settings.CommonEventFrequency}, Uncommon Frequency: {Settings.UncommonEventFrequency}, Rare Frequency: {Settings.RareEventFrequency}");
+            Game.LogTrivial($"[Rich Ambiance]: Common events: {CommonEvents.Count}, Uncommon events: {UncommonEvents.Count}, Rare events: {RareEvents.Count}");
+            Game.LogTrivial($"[Rich Ambiance]: Common Frequency: {Settings.CommonEventFrequency}, Uncommon Frequency: {Settings.UncommonEventFrequency}, Rare Frequency: {Settings.RareEventFrequency}");
 
             BeginLoopingForEvents();
         }
 
         private static void BeginLoopingForEvents()
         {
-            Game.LogTrivial($"[RPE Ambient Event]: Pre-event loop initialized.");
+            Game.LogTrivial($"[Rich Ambiance]: Pre-event loop initialized.");
             while (true)
             {
                 GameFiber.Sleep(Settings.EventCooldownTimer); //20000 for testing or Settings.EventCooldownTimer for release
                 if (PlayerIsBusy())
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: The player is busy, try again later.");
+                    Game.LogTrivial($"[Rich Ambiance]: The player is busy, try again later.");
                     continue;
                 }
                 if (ActiveEvent != null)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: An event is already running.");
+                    Game.LogTrivial($"[Rich Ambiance]: An event is already running.");
                     continue;
                 }
 
@@ -56,17 +56,17 @@ namespace RichAmbiance.Features
             {
                 if (Functions.IsCalloutRunning())
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Player busy, callout running/being dispatched.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player busy, callout running/being dispatched.");
                     return true;
                 }
                 else if (Functions.GetActivePursuit() != null)
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Player busy, pursuit active.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player busy, pursuit active.");
                     return true;
                 }
                 else
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: Player busy state not recognized.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player busy state not recognized.");
                     return false;
                 }
             }
@@ -76,14 +76,14 @@ namespace RichAmbiance.Features
         {
             string newEvent = null;
             var randomValue = new Random().Next(1, 100); // 40 for testing
-            Game.LogTrivial($"[RPE Ambient Event]: Choosing random event ({randomValue}).");
+            Game.LogTrivial($"[Rich Ambiance]: Choosing random event ({randomValue}).");
 
             if (randomValue <= Settings.CommonEventFrequency && CommonEvents.Count > 0)
             {
                 newEvent = CommonEvents[new Random().Next(CommonEvents.Count)];
                 if (string.IsNullOrEmpty(newEvent))
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: No common event found.");
+                    Game.LogTrivial($"[Rich Ambiance]: No common event found.");
                     return;
                 }
             }
@@ -92,7 +92,7 @@ namespace RichAmbiance.Features
                 newEvent = UncommonEvents[new Random().Next(UncommonEvents.Count)];
                 if (string.IsNullOrEmpty(newEvent))
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: No uncommon event found.");
+                    Game.LogTrivial($"[Rich Ambiance]: No uncommon event found.");
                     return;
                 }
             }
@@ -101,7 +101,7 @@ namespace RichAmbiance.Features
                 newEvent = RareEvents[new Random().Next(RareEvents.Count)];
                 if (string.IsNullOrEmpty(newEvent))
                 {
-                    Game.LogTrivial($"[RPE Ambient Event]: No rare event found.");
+                    Game.LogTrivial($"[Rich Ambiance]: No rare event found.");
                     return;
                 }
             }
@@ -112,7 +112,7 @@ namespace RichAmbiance.Features
 
         internal static void InitializeNewEvent(EventType newEvent)
         {
-            //Game.LogTrivial($"[RPE Ambient Event]: Starting {newEvent} event.");
+            //Game.LogTrivial($"[Rich Ambiance]: Starting {newEvent} event.");
 
             switch (newEvent)
             {

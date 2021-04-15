@@ -12,7 +12,7 @@ namespace RichAmbiance.Utils
         {
             if (Functions.IsCalloutRunning() || Functions.GetActivePursuit() != null)
             {
-                Game.LogTrivial($"[RPE Ambient Event]: Callout or pursuit is running.  Ending event.");
+                Game.LogTrivial($"[Rich Ambiance]: Callout or pursuit is running.  Ending event.");
                 return true;
             }
             return false;
@@ -22,7 +22,7 @@ namespace RichAmbiance.Utils
         {
             if (eventPeds.Count() == numberOfPedsNeeded)
             {
-                Game.LogTrivial($"[RPE Ambient Event]: Success on attempt {attempt}");
+                Game.LogTrivial($"[Rich Ambiance]: Success on attempt {attempt}");
                 return true;
             }
             return false;

@@ -1,5 +1,6 @@
 ﻿using Rage;
 using Rage.Native;
+using RichAmbiance.Vehicles;
 
 namespace RichAmbiance.Utils
 {
@@ -48,34 +49,24 @@ namespace RichAmbiance.Utils
             return getVehicleNodeProperties;
         }
 
-        internal static bool IsEntityPlayingAnimation(Entity entity, string animationDictionary, string animationName)
-        {
-            return NativeFunction.Natives.IS_ENTITY_PLAYING_ANIM<bool>(entity, animationDictionary, animationName, 3);
-        }
+        internal static bool IsEntityPlayingAnimation(Entity entity, string animationDictionary, string animationName) => NativeFunction.Natives.IS_ENTITY_PLAYING_ANIM<bool>(entity, animationDictionary, animationName, 3);
 
-        internal static void TaskStartScenarioInPlace(Ped ped, string scenarioName, int unkDelay = 0, bool playEnterAnimation = true)
-        {
-            NativeFunction.Natives.TASK_START_SCENARIO_IN_PLACE(ped, scenarioName, 0, playEnterAnimation);
-        }
+        internal static void TaskStartScenarioInPlace(Ped ped, string scenarioName, int unkDelay = 0, bool playEnterAnimation = true) => NativeFunction.Natives.TASK_START_SCENARIO_IN_PLACE(ped, scenarioName, 0, playEnterAnimation);
 
-        internal static void StartVehicleHorn(Vehicle vehicle, int duration, string mode, bool forever)
-        {
-            NativeFunction.Natives.START_VEHICLE_HORN(vehicle, duration, mode, forever);
-        }
+        internal static void StartVehicleHorn(Vehicle vehicle, int duration, string mode, bool forever) => NativeFunction.Natives.START_VEHICLE_HORN(vehicle, duration, mode, forever);
 
-        internal static void TaskTurnPedToFaceEntity(Ped ped, Entity entity, int duration)
-        {
-            NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(ped, entity, duration);
-        }
+        internal static void TaskTurnPedToFaceEntity(Ped ped, Entity entity, int duration) => NativeFunction.Natives.TASK_TURN_PED_TO_FACE_ENTITY(ped, entity, duration);
 
-        internal static void TaskVehicleShootAtPed(Ped ped, Ped target, float unknown = 0)
-        {
-            NativeFunction.Natives.x10AB107B887214D8(ped, target, unknown);
-        }
+        internal static void TaskVehicleShootAtPed(Ped ped, Ped target, float unknown = 0) => NativeFunction.Natives.x10AB107B887214D8(ped, target, unknown);
 
-        internal static void SetEntityMaxSpeed(Entity entity, float speed)
-        {
-            NativeFunction.Natives.SET_ENTITY_MAX_SPEED(entity, speed);
-        }
+        internal static void SetEntityMaxSpeed(Entity entity, float speed) => NativeFunction.Natives.SET_ENTITY_MAX_SPEED(entity, speed);
+
+        internal static void SetVehicleLights(Vehicle vehicle, VehicleLightsState state) => NativeFunction.Natives.SET_VEHICLE_LIGHTS(vehicle, (int)state);
+
+        internal static void SetVehicleBrakeLights(Vehicle vehicle, bool enabled) => NativeFunction.Natives.SET_VEHICLE_BRAKE_LIGHTS(vehicle, enabled);
+
+        internal static void SetVehicleDamage(Vehicle vehicle, Vector3 position, float damage, float radius, bool focusOnModel) => NativeFunction.Natives.SET_VEHICLE_DAMAGE(vehicle, position, damage, radius, focusOnModel);
+
+        internal static void CopyVehicleDamages(Vehicle vehicle, Vehicle targetVehicle) => NativeFunction.Natives.xE44A982368A4AF23(vehicle, targetVehicle);
     }
 }

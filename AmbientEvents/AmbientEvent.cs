@@ -27,7 +27,8 @@ namespace RichAmbiance.AmbientEvents
         CarVsAnimal = 17,
         NoVehicleLights = 18, // Implemented
         BrokenLight = 19, // Implemented
-        DistractedDriver = 20
+        BrokenWindshield = 20, // Implemented
+        DistractedDriver = 21
     }
 
     internal enum State

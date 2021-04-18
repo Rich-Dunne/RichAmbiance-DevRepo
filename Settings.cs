@@ -31,7 +31,7 @@ namespace RichAmbiance
 
         internal static void LoadSettings()
         {
-            Game.LogTrivial("[RPE]: Loading RichsPoliceEnhancements.ini settings");
+            Game.LogTrivial("[RPE]: Loading RichAmbiance.ini settings");
             _ini.Create();
 
             // Feature Settings
@@ -54,7 +54,7 @@ namespace RichAmbiance
             DriveByFrequency = _ini.ReadString("Ambient Events", "DriveByFrequency", "off");
             EventFrequencies.Add("DriveBy", DriveByFrequency);
             ProstitutionFrequency = _ini.ReadString("Ambient Events", "ProstitutionFrequency", "off");
-            EventFrequencies.Add("DriveBy", ProstitutionFrequency);
+            EventFrequencies.Add("Prostitution", ProstitutionFrequency);
 
             // BOLO Settings
             EnableBOLOStartBlip = _ini.ReadBoolean("BOLO Settings", "EnableBOLOStartBlip", false);

@@ -8,7 +8,6 @@ namespace RichAmbiance.AmbientEvents
 
     internal enum EventType
     {
-        None = 0,
         DrugDeal = 1, // Implemented
         DriveBy = 2, // Implemented
         CarJacking = 3, // Implemented
@@ -25,7 +24,10 @@ namespace RichAmbiance.AmbientEvents
         MentalHealth = 14,
         TrafficStopAssist = 15,
         OpenCarry = 16,
-        CarVsAnimal = 17
+        CarVsAnimal = 17,
+        NoVehicleLights = 18, // Implemented
+        BrokenLight = 19, // Implemented
+        DistractedDriver = 20
     }
 
     internal enum State

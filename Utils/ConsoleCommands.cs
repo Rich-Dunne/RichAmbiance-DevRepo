@@ -11,7 +11,6 @@ namespace RichAmbiance.Utils
     [Obfuscation(Exclude = false, Feature = "-rename", ApplyToMembers = false)]
     internal static class ConsoleCommands
     {
-
         [ConsoleCommand("BeginAmbientEvent")]
         internal static void Command_BeginAmbientEvent([ConsoleCommandParameter(AutoCompleterType = typeof(ConsoleCommandParameterAutoCompleterEnum), Name = "BeginAmbientEvent")] EventType eventType)
         {

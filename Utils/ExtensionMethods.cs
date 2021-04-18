@@ -1,5 +1,6 @@
 ﻿using Rage;
 using System;
+using RichAmbiance.Vehicles;
 
 namespace RichAmbiance.Utils
 {
@@ -104,19 +105,14 @@ namespace RichAmbiance.Utils
             NativeWrappers.StartVehicleHorn(vehicle, duration, mode, forever);
         }
 
-        internal static void FaceEntity(this Ped ped, Entity entity, int duration)
-        {
-            NativeWrappers.TaskTurnPedToFaceEntity(ped, entity, duration);
-        }
+        internal static void FaceEntity(this Ped ped, Entity entity, int duration) => NativeWrappers.TaskTurnPedToFaceEntity(ped, entity, duration);
 
-        internal static void ShootFromVehicle(this Ped ped, Ped target, float unknown = 0)
-        {
-            NativeWrappers.TaskVehicleShootAtPed(ped, target, unknown);
-        }
+        internal static void ShootFromVehicle(this Ped ped, Ped target, float unknown = 0) => NativeWrappers.TaskVehicleShootAtPed(ped, target, unknown);
 
-        internal static void SetMaxSpeed(this Entity entity, float speed)
-        {
-            NativeWrappers.SetEntityMaxSpeed(entity, speed);
-        }
+        internal static void SetMaxSpeed(this Entity entity, float speed) => NativeWrappers.SetEntityMaxSpeed(entity, speed);
+
+        internal static void SetVehicleLights(this Vehicle vehicle, VehicleLightsState state) => NativeWrappers.SetVehicleLights(vehicle, state);
+
+        internal static void SetVehicleBrakeLights(this Vehicle vehicle, bool enabled) => NativeWrappers.SetVehicleBrakeLights(vehicle, enabled);
     }
 }

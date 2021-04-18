@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 using RichAmbiance.Utils;
 
-namespace RichAmbiance.AmbientEvents
+namespace RichAmbiance.AmbientEvents.Events
 {
     using RichAmbiance.Features;
 

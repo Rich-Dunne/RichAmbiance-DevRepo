@@ -6,7 +6,7 @@ using System.Linq;
 using RichAmbiance.Utils;
 using RichAmbiance.PathFind;
 
-namespace RichAmbiance.AmbientEvents
+namespace RichAmbiance.AmbientEvents.Events
 {
     using RichAmbiance.Features;
 

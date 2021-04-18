@@ -51,10 +51,12 @@
     <Compile Include="AmbientEvents\AmbientEvent.cs" />
     <Compile Include="AmbientEvents\EventPed.cs" />
     <Compile Include="AmbientEvents\Events\Assault.cs" />
+    <Compile Include="AmbientEvents\Events\BrokenLight.cs" />
     <Compile Include="AmbientEvents\Events\CarJacking.cs" />
     <Compile Include="AmbientEvents\Events\DriveBy.cs" />
     <Compile Include="AmbientEvents\Events\DrugDeal.cs" />
     <Compile Include="AmbientEvents\Events\Prostitution.cs" />
+    <Compile Include="AmbientEvents\Events\NoVehicleLights.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Features\AmbientEvents.cs" />
     <Compile Include="Features\BOLO.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Utils\NativeWrappers.cs" />
     <Compile Include="Vehicles\VehicleColor.cs" />
     <Compile Include="Vehicles\VehicleExtensions.cs" />
+    <Compile Include="Vehicles\VehicleLightsState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

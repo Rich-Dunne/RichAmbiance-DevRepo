@@ -5,7 +5,7 @@ using Rage;
 using LSPD_First_Response.Mod.API;
 using RichAmbiance.Utils;
 
-namespace RichAmbiance.AmbientEvents
+namespace RichAmbiance.AmbientEvents.Events
 {
     internal class CarJacking : AmbientEvent
     {

@@ -4,6 +4,7 @@ using Rage;
 using LSPD_First_Response.Mod.API;
 using System.Linq;
 using RichAmbiance.AmbientEvents;
+using RichAmbiance.AmbientEvents.Events;
 
 namespace RichAmbiance.Features
 {
@@ -37,6 +38,7 @@ namespace RichAmbiance.Features
             Game.LogTrivial($"[Rich Ambiance]: Pre-event loop initialized.");
             while (true)
             {
+                // Need to check here every minute or so to start a minor event (lights at night/windshield/distracted driver)
                 GameFiber.Sleep(Settings.EventCooldownTimer); //20000 for testing or Settings.EventCooldownTimer for release
                 if (PlayerIsBusy())
                 {
@@ -117,19 +119,25 @@ namespace RichAmbiance.Features
             switch (newEvent)
             {
                 case EventType.DrugDeal:
-                    GameFiber.StartNew(() => new DrugDeal(), "RPE DrugDeal Event Fiber");
+                    GameFiber.StartNew(() => new DrugDeal(), "Rich Ambiance DrugDeal Event Fiber");
                     break;
                 case EventType.DriveBy:
-                    GameFiber.StartNew(() => new DriveBy(), "RPE DriveBy Event Fiber");
+                    GameFiber.StartNew(() => new DriveBy(), "Rich Ambiance DriveBy Event Fiber");
                     break;
                 case EventType.CarJacking:
-                    GameFiber.StartNew(() => new CarJacking(), "RPE CarJacking Event Fiber");
+                    GameFiber.StartNew(() => new CarJacking(), "Rich Ambiance CarJacking Event Fiber");
                     break;
                 case EventType.Assault:
-                    GameFiber.StartNew(() => new Assault(), "RPE Assault Event Fiber");
+                    GameFiber.StartNew(() => new Assault(), "Rich Ambiance Assault Event Fiber");
                     break;
                 case EventType.Prostitution:
-                    GameFiber.StartNew(() => new Prostitution(), "RPE Prostitution Event Fiber");
+                    GameFiber.StartNew(() => new Prostitution(), "Rich Ambiance Prostitution Event Fiber");
+                    break;
+                case EventType.NoVehicleLights:
+                    GameFiber.StartNew(() => new NoVehicleLights(), "Rich Ambiance VehicleLights Event Fiber");
+                    break;
+                case EventType.BrokenLight:
+                    GameFiber.StartNew(() => new BrokenLight(), "Rich Ambiance VehicleLights Event Fiber");
                     break;
                 default:
                     Game.LogTrivial($"{newEvent} is not implemented yet.");

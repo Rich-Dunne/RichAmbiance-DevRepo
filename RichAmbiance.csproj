@@ -52,6 +52,7 @@
     <Compile Include="AmbientEvents\EventPed.cs" />
     <Compile Include="AmbientEvents\Events\Assault.cs" />
     <Compile Include="AmbientEvents\Events\BrokenLight.cs" />
+    <Compile Include="AmbientEvents\Events\BrokenWindshield.cs" />
     <Compile Include="AmbientEvents\Events\CarJacking.cs" />
     <Compile Include="AmbientEvents\Events\DriveBy.cs" />
     <Compile Include="AmbientEvents\Events\DrugDeal.cs" />

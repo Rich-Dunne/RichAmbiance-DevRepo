@@ -68,5 +68,7 @@ namespace RichAmbiance.Utils
         internal static void SetVehicleDamage(Vehicle vehicle, Vector3 position, float damage, float radius, bool focusOnModel) => NativeFunction.Natives.SET_VEHICLE_DAMAGE(vehicle, position, damage, radius, focusOnModel);
 
         internal static void CopyVehicleDamages(Vehicle vehicle, Vehicle targetVehicle) => NativeFunction.Natives.xE44A982368A4AF23(vehicle, targetVehicle);
+
+        internal static void SmashVehicleWindow(Vehicle vehicle, int index) => NativeFunction.Natives.SMASH_VEHICLE_WINDOW(vehicle, index);
     }
 }

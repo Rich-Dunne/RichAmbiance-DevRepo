@@ -1,15 +1,13 @@
 ﻿using Rage;
 using RichAmbiance.Utils;
 using System.Linq;
-using RichAmbiance.Vehicles;
-using System;
 
 namespace RichAmbiance.AmbientEvents.Events
 {
-    class NoVehicleLights : AmbientEvent
+    class BrokenWindshield : AmbientEvent
     {
         private Vehicle _suspectVehicle;
-        internal NoVehicleLights()
+        internal BrokenWindshield()
         {
             Prepare();
             if (State == State.Ending)
@@ -26,16 +24,9 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void Prepare()
         {
-            if(World.TimeOfDay.Hours < 20 && World.TimeOfDay.Hours > 5)
-            {
-                Game.LogTrivial($"[Rich Ambiance]: It is not dark enough for the {GetType().Name} event.");
-                TransitionToState(State.Ending);
-                return;
-            }
-
             TransitionToState(State.Preparing);
             _suspectVehicle = GetRandomVehicle();
-            if(!_suspectVehicle)
+            if (!_suspectVehicle)
             {
                 TransitionToState(State.Ending);
                 return;
@@ -47,13 +38,14 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void Process()
         {
-            _suspectVehicle.SetVehicleLights(VehicleLightsState.Off);
-            if(new Random().Next(2) == 1)
-            {
-                _suspectVehicle.SetVehicleBrakeLights(false);
-            }
-
+            BreakWindshield();
             TransitionToState(State.Ending);
+        }
+
+        private void BreakWindshield()
+        {
+            _suspectVehicle.BreakWindow(6);
+            Game.LogTrivial($"[Rich Ambiance]: Breaking windshield");
         }
     }
 }

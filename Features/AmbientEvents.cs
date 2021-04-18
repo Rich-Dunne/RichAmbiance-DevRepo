@@ -137,7 +137,10 @@ namespace RichAmbiance.Features
                     GameFiber.StartNew(() => new NoVehicleLights(), "Rich Ambiance VehicleLights Event Fiber");
                     break;
                 case EventType.BrokenLight:
-                    GameFiber.StartNew(() => new BrokenLight(), "Rich Ambiance VehicleLights Event Fiber");
+                    GameFiber.StartNew(() => new BrokenLight(), "Rich Ambiance BrokenLight Event Fiber");
+                    break;
+                case EventType.BrokenWindshield:
+                    GameFiber.StartNew(() => new BrokenWindshield(), "Rich Ambiance BrokenWindshield Event Fiber");
                     break;
                 default:
                     Game.LogTrivial($"{newEvent} is not implemented yet.");

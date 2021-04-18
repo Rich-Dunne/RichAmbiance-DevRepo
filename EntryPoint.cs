@@ -1,4 +1,5 @@
 ﻿using LSPD_First_Response.Mod.API;
+using LSPD_First_Response.Mod.Utils;
 using Rage;
 using System.Reflection;
 
@@ -31,6 +32,7 @@ namespace RichAmbiance
 
         private static void InitializeFeatures()
         {
+            Game.AddConsoleCommands();
             if (Settings.EnableAmbientEvents)
             {
                 Game.LogTrivial("[RichAmbiance]: AmbientEvents are enabled.");

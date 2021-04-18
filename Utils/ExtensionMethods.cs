@@ -114,5 +114,7 @@ namespace RichAmbiance.Utils
         internal static void SetVehicleLights(this Vehicle vehicle, VehicleLightsState state) => NativeWrappers.SetVehicleLights(vehicle, state);
 
         internal static void SetVehicleBrakeLights(this Vehicle vehicle, bool enabled) => NativeWrappers.SetVehicleBrakeLights(vehicle, enabled);
+
+        internal static void BreakWindow(this Vehicle vehicle, int windowIndex) => NativeWrappers.SmashVehicleWindow(vehicle, windowIndex);
     }
 }

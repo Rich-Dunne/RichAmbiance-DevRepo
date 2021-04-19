@@ -24,7 +24,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        private void Prepare()
+        new private void Prepare()
         {
             if(World.TimeOfDay.Hours < 20 && World.TimeOfDay.Hours > 5)
             {
@@ -45,7 +45,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
 
-        private void Process()
+        new private void Process()
         {
             _suspectVehicle.SetVehicleLights(VehicleLightsState.Off);
             if(new Random().Next(2) == 1)

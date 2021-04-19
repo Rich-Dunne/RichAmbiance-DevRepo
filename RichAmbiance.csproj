@@ -58,6 +58,7 @@
     <Compile Include="AmbientEvents\Events\DrugDeal.cs" />
     <Compile Include="AmbientEvents\Events\Prostitution.cs" />
     <Compile Include="AmbientEvents\Events\NoVehicleLights.cs" />
+    <Compile Include="AmbientEvents\IAmbientEvent.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Features\AmbientEvents.cs" />
     <Compile Include="Features\BOLO.cs" />

@@ -39,7 +39,7 @@ namespace RichAmbiance.AmbientEvents
         Ending = 3
     }
 
-    internal class AmbientEvent
+    internal class AmbientEvent : IAmbientEvent
     {
         internal State State { get; private set; } = State.Uninitialized;
         internal EventType EventType { get; set; }
@@ -47,6 +47,9 @@ namespace RichAmbiance.AmbientEvents
         internal List<Blip> EventBlips { get; private set; } = new List<Blip>();
 
         internal AmbientEvent() { }
+
+        public void Prepare() { }
+        public void Process() { }
 
         internal void TransitionToState(State state)
         {

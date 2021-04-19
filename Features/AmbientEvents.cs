@@ -142,6 +142,12 @@ namespace RichAmbiance.Features
                 case EventType.BrokenWindshield:
                     GameFiber.StartNew(() => new BrokenWindshield(), "Rich Ambiance BrokenWindshield Event Fiber");
                     break;
+                case EventType.RecklessDriver:
+                    GameFiber.StartNew(() => new RecklessDriver(), "Rich Ambiance RecklessDriver Event Fiber");
+                    break;
+                case EventType.Speeding:
+                    GameFiber.StartNew(() => new Speeding(), "Rich Ambiance Speeding Event Fiber");
+                    break;
                 default:
                     Game.LogTrivial($"{newEvent} is not implemented yet.");
                     break;

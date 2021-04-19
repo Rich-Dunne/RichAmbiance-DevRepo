@@ -70,5 +70,9 @@ namespace RichAmbiance.Utils
         internal static void CopyVehicleDamages(Vehicle vehicle, Vehicle targetVehicle) => NativeFunction.Natives.xE44A982368A4AF23(vehicle, targetVehicle);
 
         internal static void SmashVehicleWindow(Vehicle vehicle, int index) => NativeFunction.Natives.SMASH_VEHICLE_WINDOW(vehicle, index);
+
+        internal static void SetDriveTaskCruiseSpeed(Ped driver, float cruiseSpeed) => NativeFunction.Natives.SET_DRIVE_TASK_CRUISE_SPEED(driver, cruiseSpeed);
+
+        internal static void SetVehicleForwardSpeed(Vehicle vehicle, float speed) => NativeFunction.Natives.SET_VEHICLE_FORWARD_SPEED(vehicle, speed);
     }
 }

@@ -53,11 +53,13 @@
     <Compile Include="AmbientEvents\Events\Assault.cs" />
     <Compile Include="AmbientEvents\Events\BrokenLight.cs" />
     <Compile Include="AmbientEvents\Events\BrokenWindshield.cs" />
+    <Compile Include="AmbientEvents\Events\RecklessDriver.cs" />
     <Compile Include="AmbientEvents\Events\CarJacking.cs" />
     <Compile Include="AmbientEvents\Events\DriveBy.cs" />
     <Compile Include="AmbientEvents\Events\DrugDeal.cs" />
     <Compile Include="AmbientEvents\Events\Prostitution.cs" />
     <Compile Include="AmbientEvents\Events\NoVehicleLights.cs" />
+    <Compile Include="AmbientEvents\Events\Speeding.cs" />
     <Compile Include="AmbientEvents\IAmbientEvent.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Features\AmbientEvents.cs" />

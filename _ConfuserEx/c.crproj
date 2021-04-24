@@ -1,0 +1,18 @@
+<project outputDir="C:\Users\Rich\Desktop\Mod Stuff\Mod Development\RichAmbiance\obj\Release" baseDir="C:\Users\Rich\Desktop\Mod Stuff\Mod Development\RichAmbiance\obj\Release" xmlns="http://confuser.codeplex.com">
+<rule pattern="true" />
+<module path="RichAmbiance.dll">
+<rule pattern="true">
+<protection id="anti ildasm" />
+<protection id="anti tamper" />
+<protection id="constants" />
+<protection id="ctrl flow" />
+<protection id="anti dump" />
+<protection id="anti debug" />
+<protection id="ref proxy" />
+<protection id="resources" />
+</rule>
+</module>
+<probePath>C:\Users\Rich\Desktop\Mod Stuff\Mod Development\Modding Resources\References</probePath>
+<probePath>..\..\packages\RagePluginHook.1.86.1\lib\net472</probePath>
+<probePath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2</probePath>
+</project>

@@ -81,11 +81,19 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private Vehicle CreateVehicleToCopyDamage()
         {
-            var vehicleToCopy = new Vehicle("SHERIFF2", new Vector3(0, 0, 0), _suspectVehicle.Heading);
-            vehicleToCopy.IsCollisionEnabled = false;
-            vehicleToCopy.IsGravityDisabled = true;
-            vehicleToCopy.Opacity = 0;
-            return vehicleToCopy;
+            try
+            {
+                var vehicleToCopy = new Vehicle("SHERIFF2", new Vector3(0, 0, 0), _suspectVehicle.Heading);
+                vehicleToCopy.IsCollisionEnabled = false;
+                vehicleToCopy.IsGravityDisabled = true;
+                vehicleToCopy.Opacity = 0;
+                return vehicleToCopy;
+            }
+            catch(Exception ex)
+            {
+                Game.LogTrivial($"Error trying to create vehicle: {ex.Message}");
+                return null;
+            }
         }
 
         private void DamageVehicles(Vehicle vehicleToCopy, string brokenLight)

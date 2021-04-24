@@ -85,6 +85,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
             while (State != State.Ending && !_suspect.IsInVehicle(_victim.LastVehicle, false))
             {
+                GameFiber.Yield();
                 CheckSuspectTaskStatus();
             }
 

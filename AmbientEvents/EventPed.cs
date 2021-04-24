@@ -9,7 +9,7 @@ namespace RichAmbiance.AmbientEvents
     {
         PrimarySuspect = 0,
         SecondarySuspect = 1,
-        Victim = 1,
+        Victim = 2,
     }
 
     internal class EventPed : Ped

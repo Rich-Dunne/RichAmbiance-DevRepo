@@ -35,7 +35,7 @@ namespace RichAmbiance.AmbientEvents.Events
                 TransitionToState(State.Ending);
                 return;
             }
-            Game.LogTrivial($"[Rich Ambiance]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
         private Vehicle FindEventPed() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
@@ -44,7 +44,7 @@ namespace RichAmbiance.AmbientEvents.Events
         {
             _suspectVehicle.Driver.Tasks.Clear();
             _suspectVehicle.Driver.Tasks.DriveToPosition(new Vector3(new Random().Next(1000), new Random().Next(1000), 0), 35f, VehicleDrivingFlags.DriveAroundVehicles);
-            Game.LogTrivial($"[Rich Ambiance]: Suspect is speeding.");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect is speeding.");
 
         }
     }

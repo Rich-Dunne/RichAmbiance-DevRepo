@@ -31,7 +31,7 @@ namespace RichAmbiance.AmbientEvents.Events
                 TransitionToState(State.Ending);
                 return;
             }
-            Game.LogTrivial($"[Rich Ambiance]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
         private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
@@ -45,7 +45,7 @@ namespace RichAmbiance.AmbientEvents.Events
         private void BreakWindshield()
         {
             _suspectVehicle.BreakWindow(6);
-            Game.LogTrivial($"[Rich Ambiance]: Breaking windshield");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Breaking windshield");
         }
     }
 }

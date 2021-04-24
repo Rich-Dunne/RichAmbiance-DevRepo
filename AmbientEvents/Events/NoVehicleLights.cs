@@ -28,7 +28,7 @@ namespace RichAmbiance.AmbientEvents.Events
         {
             if(World.TimeOfDay.Hours < 20 && World.TimeOfDay.Hours > 5)
             {
-                Game.LogTrivial($"[Rich Ambiance]: It is not dark enough for the {GetType().Name} event.");
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)]: It is not dark enough for the {GetType().Name} event.");
                 TransitionToState(State.Ending);
                 return;
             }
@@ -40,7 +40,7 @@ namespace RichAmbiance.AmbientEvents.Events
                 TransitionToState(State.Ending);
                 return;
             }
-            Game.LogTrivial($"[Rich Ambiance]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
         private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);

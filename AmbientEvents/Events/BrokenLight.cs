@@ -27,7 +27,7 @@ namespace RichAmbiance.AmbientEvents.Events
         {
             if (World.TimeOfDay.Hours < 20 && World.TimeOfDay.Hours > 5)
             {
-                Game.LogTrivial($"[Rich Ambiance]: It is not dark enough for the {GetType().Name} event.");
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)]: It is not dark enough for the {GetType().Name} event.");
                 TransitionToState(State.Ending);
                 return;
             }
@@ -39,7 +39,7 @@ namespace RichAmbiance.AmbientEvents.Events
                 TransitionToState(State.Ending);
                 return;
             }
-            Game.LogTrivial($"[Rich Ambiance]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
         private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
@@ -56,7 +56,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
             if(!vehicleToCopy)
             {
-                Game.LogTrivial($"[Rich Ambiance]: Vehicle to copy is not valid.  Ending event.");
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Vehicle to copy is not valid.  Ending event.");
                 TransitionToState(State.Ending);
                 return;
             }
@@ -72,7 +72,7 @@ namespace RichAmbiance.AmbientEvents.Events
             var brokenLight = MathHelper.Choose(boneStrings);
             if (!_suspectVehicle.HasBone(brokenLight))
             {
-                Game.LogTrivial($"[Rich Ambiance]: Vehicle does not have bone {brokenLight}");
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Vehicle does not have bone {brokenLight}");
                 TransitionToState(State.Ending);
             }
 
@@ -91,7 +91,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
             catch(Exception ex)
             {
-                Game.LogTrivial($"Error trying to create vehicle: {ex.Message}");
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Error trying to create vehicle: {ex.Message}");
                 return null;
             }
         }

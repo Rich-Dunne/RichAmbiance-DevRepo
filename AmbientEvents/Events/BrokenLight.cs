@@ -23,7 +23,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        new private void Prepare()
+        private void Prepare()
         {
             if (World.TimeOfDay.Hours < 20 && World.TimeOfDay.Hours > 5)
             {
@@ -44,7 +44,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
 
-        new private void Process()
+        private void Process()
         {
             string brokenLight = GetVehicleBone();
             if(State == State.Ending)

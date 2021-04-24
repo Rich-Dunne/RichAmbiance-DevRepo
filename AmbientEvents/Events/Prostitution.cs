@@ -39,7 +39,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        new private void Prepare()
+        private void Prepare()
         {
             TransitionToState(State.Preparing);
             FindProstitute();
@@ -193,7 +193,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        new private void Process()
+        private void Process()
         {
             TransitionToState(State.Running);
             //GameFiber.StartNew(() => UpdateProstituteRoadNodes(), "RPE Update Prostitute Road Nodes Fiber");

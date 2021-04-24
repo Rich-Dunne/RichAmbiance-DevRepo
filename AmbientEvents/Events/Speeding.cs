@@ -25,7 +25,7 @@ namespace RichAmbiance.AmbientEvents.Events
             TransitionToState(State.Ending);
         }
 
-        new private void Prepare()
+        private void Prepare()
         {
             TransitionToState(State.Preparing);
 
@@ -40,7 +40,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private Vehicle FindEventPed() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
 
-        new private void Process()
+        private void Process()
         {
             _suspectVehicle.Driver.Tasks.Clear();
             _suspectVehicle.Driver.Tasks.DriveToPosition(new Vector3(new Random().Next(1000), new Random().Next(1000), 0), 35f, VehicleDrivingFlags.DriveAroundVehicles);

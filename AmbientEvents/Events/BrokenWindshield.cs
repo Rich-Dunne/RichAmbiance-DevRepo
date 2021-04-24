@@ -22,7 +22,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        new private void Prepare()
+        private void Prepare()
         {
             TransitionToState(State.Preparing);
             _suspectVehicle = GetRandomVehicle();
@@ -36,7 +36,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
 
-        new private void Process()
+        private void Process()
         {
             BreakWindshield();
             TransitionToState(State.Ending);

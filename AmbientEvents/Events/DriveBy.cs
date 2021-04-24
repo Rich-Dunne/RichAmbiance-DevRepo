@@ -29,7 +29,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        new private void Prepare()
+        private void Prepare()
         {
             TransitionToState(State.Preparing);
             FindEventPeds();
@@ -76,7 +76,7 @@ namespace RichAmbiance.AmbientEvents.Events
             }
         }
 
-        new private void Process()
+        private void Process()
         {
             TransitionToState(State.Running);
             GameFiber.StartNew(() => CheckEndConditions(), "RPE End Conditions Fiber");

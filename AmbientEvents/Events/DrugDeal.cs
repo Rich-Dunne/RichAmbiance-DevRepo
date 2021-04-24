@@ -173,7 +173,7 @@ namespace RichAmbiance.AmbientEvents.Events
 
                 if (Game.LocalPlayer.Character.DistanceTo2D(_suspect.Position) < 10f || Game.LocalPlayer.Character.DistanceTo2D(_buyer.Position) < 10f)
                 {
-                    Game.LogTrivial($"[Rich Ambiance]: Player is near prostitute, triggering response.");
+                    Game.LogTrivial($"[Rich Ambiance]: Player is near suspect or buyer, triggering response.");
                     _suspect.Tasks.Clear();
                     _buyer.Tasks.Clear();
 
@@ -186,22 +186,22 @@ namespace RichAmbiance.AmbientEvents.Events
                         _suspect.Tasks.Wander();
                         _buyer.Tasks.Wander();
 
-                        foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
-                        {
-                            while (blip && blip.Alpha > 0)
-                            {
-                                blip.Alpha -= 0.01f;
-                                GameFiber.Yield();
-                                if (State == State.Ending)
-                                {
-                                    return;
-                                }
-                            }
-                            if (blip)
-                            {
-                                blip.Delete();
-                            }
-                        }
+                        //foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
+                        //{
+                        //    while (blip && blip.Alpha > 0)
+                        //    {
+                        //        blip.Alpha -= 0.01f;
+                        //        GameFiber.Yield();
+                        //        if (State == State.Ending)
+                        //        {
+                        //            return;
+                        //        }
+                        //    }
+                        //    if (blip)
+                        //    {
+                        //        blip.Delete();
+                        //    }
+                        //}
                     }
 
                     TransitionToState(State.Ending);

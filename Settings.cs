@@ -18,7 +18,7 @@ namespace RichAmbiance
         internal static bool EventBlips { get; private set; } = false;
         internal static int CommonEventFrequency { get; private set; } = 70;
         internal static int UncommonEventFrequency { get; private set; } = 20;
-        internal static int RareEventFrequency { get; private set; } = 10;
+        internal static int RareEventFrequency { get; private set; } = CommonEventFrequency + UncommonEventFrequency;
         internal static string AssaultFrequency { get; private set; } = "off";
         internal static string CarJackingFrequency { get; private set; } = "off";
         internal static string DrugDealFrequency { get; private set; } = "off";
@@ -46,9 +46,12 @@ namespace RichAmbiance
             EventCooldownTimer *= 60000;
             EventBlips = _ini.ReadBoolean("Ambient Events", "EventBlips", true);
             DisableEventsWhilePlayerIsBusy = _ini.ReadBoolean("Ambient Events", "DisableWhilePlayerBusy", false);
+            
             CommonEventFrequency = _ini.ReadInt32("Ambient Events", "CommonEventFrequency", 70);
             UncommonEventFrequency = _ini.ReadInt32("Ambient Events", "UnommonEventFrequency", 20);
-            RareEventFrequency = _ini.ReadInt32("Ambient Events", "RareEventFrequency", 10);
+            //RareEventFrequency = _ini.ReadInt32("Ambient Events", "RareEventFrequency", 10);
+            ValidateFrequencySettings();
+
             AssaultFrequency = _ini.ReadString("Ambient Events", "AssaultFrequency", "off").ToLower();
             EventFrequencies.Add(EventType.Assault, ConvertFrequencyStringToEnum(AssaultFrequency));
             CarJackingFrequency = _ini.ReadString("Ambient Events", "CarJackingFrequency", "off").ToLower();
@@ -73,6 +76,17 @@ namespace RichAmbiance
             frequency = char.ToUpper(frequency[0]) + frequency.Substring(1);
             EventFrequency eventFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), frequency);
             return eventFrequency;
+        }
+
+        private static void ValidateFrequencySettings()
+        {
+            RareEventFrequency = CommonEventFrequency + UncommonEventFrequency;
+            if(RareEventFrequency > 100)
+            {
+                CommonEventFrequency = 70;
+                UncommonEventFrequency = 20;
+                RareEventFrequency = 10;
+            }
         }
     }
 }

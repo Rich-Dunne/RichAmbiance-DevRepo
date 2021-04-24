@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmbientEvents\AmbientEvent.cs" />
+    <Compile Include="AmbientEvents\Enums.cs" />
     <Compile Include="AmbientEvents\EventPed.cs" />
     <Compile Include="AmbientEvents\Events\Assault.cs" />
     <Compile Include="AmbientEvents\Events\BrokenLight.cs" />

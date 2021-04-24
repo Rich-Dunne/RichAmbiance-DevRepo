@@ -32,7 +32,7 @@ namespace RichAmbiance.Features
             UncommonEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == EventFrequency.Uncommon).Select(x => x.Key).ToList());
             RareEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == EventFrequency.Rare).Select(x => x.Key).ToList());
             Game.LogTrivial($"[Rich Ambiance]: Common events: {CommonEvents.Count}, Uncommon events: {UncommonEvents.Count}, Rare events: {RareEvents.Count}");
-            Game.LogTrivial($"[Rich Ambiance]: Common Frequency: {Settings.CommonEventFrequency}, Uncommon Frequency: {Settings.UncommonEventFrequency}, Rare Frequency: {Settings.RareEventFrequency}");
+            Game.LogTrivial($"[Rich Ambiance]: Common Frequency: {Settings.CommonEventFrequency}, Uncommon Frequency: {Settings.UncommonEventFrequency}, Rare Frequency: {100 - Settings.RareEventFrequency}");
 
             GameFiber.StartNew(() => BeginLoopingForMinorEvents(), "RichAmbiance Minor Event Loop Fiber");
             GameFiber.StartNew(() => BeginLoopingForEvents(), "RichAmbiance Major Event Loop Fiber");
@@ -90,39 +90,28 @@ namespace RichAmbiance.Features
 
         private static void SelectEvent()
         {
-            EventType newEvent = EventType.None;
-            var randomValue = new Random().Next(1, 100); // 40 for testing
+            var randomValue = new Random().Next(1, 101); // 40 for testing
             Game.LogTrivial($"[Rich Ambiance]: Choosing random event ({randomValue}).");
 
+            EventType newEvent;
             if (randomValue <= Settings.CommonEventFrequency && CommonEvents.Count > 0)
             {
-                newEvent = CommonEvents[new Random().Next(CommonEvents.Count)];
-                //if (string.IsNullOrEmpty(newEvent))
-                //{
-                //    Game.LogTrivial($"[Rich Ambiance]: No common event found.");
-                //    return;
-                //}
+                newEvent = MathHelper.Choose<EventType>(CommonEvents);
             }
-            else if (randomValue > Settings.CommonEventFrequency && randomValue <= Settings.CommonEventFrequency + Settings.UncommonEventFrequency && UncommonEvents.Count > 0)
+            else if (randomValue > Settings.CommonEventFrequency && randomValue <= Settings.RareEventFrequency && UncommonEvents.Count > 0)
             {
-                newEvent = UncommonEvents[new Random().Next(UncommonEvents.Count)];
-                //if (string.IsNullOrEmpty(newEvent))
-                //{
-                //    Game.LogTrivial($"[Rich Ambiance]: No uncommon event found.");
-                //    return;
-                //}
+                newEvent = MathHelper.Choose<EventType>(UncommonEvents);
             }
-            else if (randomValue > Settings.CommonEventFrequency + Settings.UncommonEventFrequency && RareEvents.Count > 0)
+            else if (randomValue > Settings.RareEventFrequency && RareEvents.Count > 0)
             {
-                newEvent = RareEvents[new Random().Next(RareEvents.Count)];
-                //if (string.IsNullOrEmpty(newEvent))
-                //{
-                //    Game.LogTrivial($"[Rich Ambiance]: No rare event found.");
-                //    return;
-                //}
+                newEvent = MathHelper.Choose<EventType>(RareEvents);
+            }
+            else
+            {
+                Game.LogTrivial($"[Rich Ambiance]: There are no events for this frequency.");
+                return;
             }
 
-            //EventType eventType = (EventType)Enum.Parse(typeof(EventType), newEvent);
             InitializeNewEvent(newEvent);
         }
 
@@ -153,7 +142,7 @@ namespace RichAmbiance.Features
 
         private static void TryStartMinorEvent()
         {
-            switch(MathHelper.Choose(MinorEvents).First())
+            switch(MathHelper.Choose<EventType>(MinorEvents))
             {
                 case EventType.BrokenLight:
                     GameFiber.StartNew(() => new BrokenLight(), "Rich Ambiance BrokenLight Event Fiber");

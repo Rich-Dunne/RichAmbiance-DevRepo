@@ -33,9 +33,11 @@
   <ItemGroup>
     <Reference Include="LSPD First Response">
       <HintPath>..\Modding Resources\References\LSPD First Response.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RagePluginHook, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\RagePluginHook.1.86.1\lib\net472\RagePluginHook.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

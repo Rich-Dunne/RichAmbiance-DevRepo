@@ -289,7 +289,6 @@ namespace RichAmbiance.AmbientEvents.Events
                 _john = new EventPed(johnVehicle.Driver, Role.SecondarySuspect, false);
                 Game.LogTrivial($"Pullover vehicle collected at {collectionNode}, prostitute's position is {_prostitute.Position}");
                 _johnFound = true;
-                //GameFiber.StartNew(() => CheckJohnEndConditions(), "RPE John End Conditions Fiber");
                 break;
             }
         }

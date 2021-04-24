@@ -1,5 +1,4 @@
 ﻿using LSPD_First_Response.Mod.API;
-using LSPD_First_Response.Mod.Utils;
 using Rage;
 using System.Reflection;
 
@@ -27,7 +26,7 @@ namespace RichAmbiance
 
         public override void Finally()
         {
-            Features.AmbientEvents.ActiveEvent.Cleanup();
+            Features.AmbientEvents.ActiveEvent.Cleanup(false);
         }
 
         private static void InitializeFeatures()

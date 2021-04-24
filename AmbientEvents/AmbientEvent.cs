@@ -6,41 +6,6 @@ namespace RichAmbiance.AmbientEvents
 { 
     using RichAmbiance.Features;
 
-    internal enum EventType
-    {
-        DrugDeal = 1, // Implemented
-        DriveBy = 2, // Implemented
-        CarJacking = 3, // Implemented
-        Assault = 4, // Implemented
-        RoadRage = 5,
-        PublicIntoxication = 6,
-        DUI = 7,
-        Prostitution = 8, // Implemented
-        Protest = 9,
-        SuspiciousCircumstances = 10,
-        CriminalMischief = 11,
-        OfficerAmbush = 12,
-        CitizenAssist = 13,
-        MentalHealth = 14,
-        TrafficStopAssist = 15,
-        OpenCarry = 16,
-        CarVsAnimal = 17,
-        NoVehicleLights = 18, // Implemented
-        BrokenLight = 19, // Implemented
-        BrokenWindshield = 20, // Implemented
-        DistractedDriver = 21,
-        RecklessDriver = 22, // Implemented
-        Speeding = 23 // Implemented
-    }
-
-    internal enum State
-    {
-        Uninitialized = 0,
-        Preparing = 1,
-        Running = 2,
-        Ending = 3
-    }
-
     internal class AmbientEvent : IAmbientEvent
     {
         internal State State { get; private set; } = State.Uninitialized;

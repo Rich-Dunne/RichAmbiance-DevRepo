@@ -91,7 +91,7 @@ namespace RichAmbiance.AmbientEvents.Events
                 if (RoadPoints[0] != null || RoadPoints[2] != null)
                 {
                     //Game.DisplaySubtitle($"Prostitute found.");
-                    _prostitute = new EventPed(prostitute, Role.PrimarySuspect, true, BlipSprite.DropOffHooker);
+                    _prostitute = new EventPed(prostitute, Role.PrimarySuspect, this, true, BlipSprite.DropOffHooker);
                     NativeWrappers.TaskStartScenarioInPlace(_prostitute, "WORLD_HUMAN_PROSTITUTE_LOW_CLASS");
                     return;
                 }
@@ -286,7 +286,7 @@ namespace RichAmbiance.AmbientEvents.Events
                     continue;
                 }
 
-                _john = new EventPed(johnVehicle.Driver, Role.SecondarySuspect, false);
+                _john = new EventPed(johnVehicle.Driver, Role.SecondarySuspect, this, false);
                 Game.LogTrivial($"Pullover vehicle collected at {collectionNode}, prostitute's position is {_prostitute.Position}");
                 _johnFound = true;
                 break;
@@ -416,7 +416,7 @@ namespace RichAmbiance.AmbientEvents.Events
         {
             _oldDistance = Game.LocalPlayer.Character.DistanceTo2D(_prostitute);
 
-            while (State == State.Running)
+            while (State != State.Ending)
             {
                 GameFiber.Yield();
 
@@ -453,7 +453,8 @@ namespace RichAmbiance.AmbientEvents.Events
                     {
                         _prostitute.Tasks.Wander();
 
-                        foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
+                        //foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
+                        foreach (Blip blip in AmbientEvents.ActiveEvents.First(x => x == this).EventBlips.Where(b => b))
                         {
                             while (blip && blip.Alpha > 0)
                             {
@@ -507,10 +508,12 @@ namespace RichAmbiance.AmbientEvents.Events
                         return;
                     }
 
-                    if (_prostitute.CurrentVehicle == _john.CurrentVehicle && AmbientEvents.ActiveEvent.EventBlips.Count > 0)
+                    //if (_prostitute.CurrentVehicle == _john.CurrentVehicle && AmbientEvents.ActiveEvent.EventBlips.Count > 0)
+                    if (_prostitute.CurrentVehicle == _john.CurrentVehicle && AmbientEvents.ActiveEvents.First(x => x == this).EventBlips.Count > 0)
                     {
                         GameFiber.Sleep(10);
-                        foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
+                        //foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
+                        foreach (Blip blip in AmbientEvents.ActiveEvents.First(x => x == this).EventBlips.Where(b => b))
                         {
                             while (blip && blip.Alpha > 0)
                             {
@@ -551,10 +554,10 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void StartPursuit()
         {
-            foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips)
-            {
-                blip.Delete();
-            }
+            //foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips)
+            //{
+            //    blip.Delete();
+            //}
 
             var pursuit = Functions.CreatePursuit();
             Functions.AddPedToPursuit(pursuit, _prostitute);

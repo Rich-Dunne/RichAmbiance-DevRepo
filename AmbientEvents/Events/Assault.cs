@@ -68,8 +68,8 @@ namespace RichAmbiance.AmbientEvents.Events
                 var victim = _usablePeds.FirstOrDefault(p => p != ped && Math.Abs(ped.Position.Z - p.Position.Z) <= 3f && p.DistanceTo2D(ped) <= 10f);
                 if (victim)
                 {
-                    _suspect = new EventPed(ped, Role.PrimarySuspect, true);
-                    _victim = new EventPed(victim, Role.Victim, false);
+                    _suspect = new EventPed(ped, Role.PrimarySuspect, this, true);
+                    _victim = new EventPed(victim, Role.Victim, this, false);
                     return;
                 }
             }

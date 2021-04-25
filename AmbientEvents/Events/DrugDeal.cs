@@ -7,8 +7,6 @@ using RichAmbiance.Utils;
 
 namespace RichAmbiance.AmbientEvents.Events
 {
-    using RichAmbiance.Features;
-
     internal class DrugDeal : AmbientEvent
     {
         private List<Ped> _usablePeds;
@@ -70,8 +68,8 @@ namespace RichAmbiance.AmbientEvents.Events
                 var victim = _usablePeds.FirstOrDefault(p => p != ped && Math.Abs(ped.Position.Z - p.Position.Z) <= 3f && p.DistanceTo2D(ped) <= 10f);
                 if (victim)
                 {
-                    _suspect = new EventPed(ped, Role.PrimarySuspect, true);
-                    _buyer = new EventPed(victim, Role.SecondarySuspect, false);
+                    _suspect = new EventPed(ped, Role.PrimarySuspect, this, true);
+                    _buyer = new EventPed(victim, Role.SecondarySuspect, this, false);
                     return;
                 }
             }
@@ -140,7 +138,7 @@ namespace RichAmbiance.AmbientEvents.Events
         {
             _oldDistance = Game.LocalPlayer.Character.DistanceTo2D(_suspect);
 
-            while (State == State.Running)
+            while (State != State.Ending)
             {
                 GameFiber.Yield();
                 if (_suspect == null || _buyer == null || !_suspect || !_buyer || !_suspect.IsAlive || !_buyer.IsAlive || Functions.IsPedGettingArrested(_suspect) || Functions.IsPedGettingArrested(_buyer))
@@ -185,23 +183,6 @@ namespace RichAmbiance.AmbientEvents.Events
                     {
                         _suspect.Tasks.Wander();
                         _buyer.Tasks.Wander();
-
-                        //foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips.Where(b => b))
-                        //{
-                        //    while (blip && blip.Alpha > 0)
-                        //    {
-                        //        blip.Alpha -= 0.01f;
-                        //        GameFiber.Yield();
-                        //        if (State == State.Ending)
-                        //        {
-                        //            return;
-                        //        }
-                        //    }
-                        //    if (blip)
-                        //    {
-                        //        blip.Delete();
-                        //    }
-                        //}
                     }
 
                     TransitionToState(State.Ending);
@@ -230,11 +211,6 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void StartPursuit()
         {
-            foreach (Blip blip in AmbientEvents.ActiveEvent.EventBlips)
-            {
-                blip.Delete();
-            }
-
             var pursuit = Functions.CreatePursuit();
             Functions.AddPedToPursuit(pursuit, _suspect);
             Functions.AddPedToPursuit(pursuit, _buyer);

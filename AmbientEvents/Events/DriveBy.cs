@@ -69,8 +69,8 @@ namespace RichAmbiance.AmbientEvents.Events
                 var victim = _usablePeds.FirstOrDefault(p => p != ped && ped.RelationshipGroup != p.RelationshipGroup && p.CurrentVehicle != ped.CurrentVehicle && Math.Abs(ped.Position.Z - p.Position.Z) <= 5f && p.DistanceTo2D(ped) <= 15f);
                 if (victim)
                 {
-                    _suspect = new EventPed(ped, Role.PrimarySuspect, true, (BlipSprite)229);
-                    _victim = new EventPed(victim, Role.Victim, false);
+                    _suspect = new EventPed(ped, Role.PrimarySuspect, this, true, (BlipSprite)229);
+                    _victim = new EventPed(victim, Role.Victim, this, false);
                     return;
                 }
             }

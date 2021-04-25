@@ -21,7 +21,7 @@ namespace RichAmbiance.Features
             EventType.RecklessDriver,
             EventType.Speeding
         };
-        internal static AmbientEvent ActiveEvent { get; set; } = null;
+        internal static List<AmbientEvent> ActiveEvents { get; private set; } = new List<AmbientEvent>();
 
         private const int MINOR_AMBIENT_EVENT_MINIMUM_DELAY = 60000;
         private const int MINOR_AMBIENT_EVENT_MAXIMUM_DELAY = MINOR_AMBIENT_EVENT_MINIMUM_DELAY * 3;
@@ -47,11 +47,6 @@ namespace RichAmbiance.Features
                 if (Settings.DisableEventsWhilePlayerIsBusy && PlayerIsBusy())
                 {
                     Game.LogTrivial($"[Rich Ambiance]: The player is busy, try again later.");
-                    continue;
-                }
-                if (ActiveEvent != null)
-                {
-                    Game.LogTrivial($"[Rich Ambiance]: An event is already running.");
                     continue;
                 }
 
@@ -96,19 +91,28 @@ namespace RichAmbiance.Features
             EventType newEvent;
             if (randomValue <= Settings.CommonEventFrequency && CommonEvents.Count > 0)
             {
+                Game.LogTrivial($"[Rich Ambiance]: Starting common event.");
                 newEvent = MathHelper.Choose<EventType>(CommonEvents);
             }
             else if (randomValue > Settings.CommonEventFrequency && randomValue <= Settings.RareEventFrequency && UncommonEvents.Count > 0)
             {
+                Game.LogTrivial($"[Rich Ambiance]: Starting uncommon event.");
                 newEvent = MathHelper.Choose<EventType>(UncommonEvents);
             }
             else if (randomValue > Settings.RareEventFrequency && RareEvents.Count > 0)
             {
+                Game.LogTrivial($"[Rich Ambiance]: Starting rare event.");
                 newEvent = MathHelper.Choose<EventType>(RareEvents);
             }
             else
             {
                 Game.LogTrivial($"[Rich Ambiance]: There are no events for this frequency.");
+                return;
+            }
+
+            if(ActiveEvents.Any(x => x.EventType == newEvent))
+            {
+                Game.LogTrivial($"[Rich Ambiance]: There's already an active {newEvent} event.");
                 return;
             }
 
@@ -133,6 +137,24 @@ namespace RichAmbiance.Features
                     break;
                 case EventType.Prostitution:
                     GameFiber.StartNew(() => new Prostitution(), "Rich Ambiance Prostitution Event Fiber");
+                    break;
+                case EventType.BOLO:
+                    GameFiber.StartNew(() => new BOLO(), "Rich Ambiance BOLO Event Fiber");
+                    break;
+                case EventType.BrokenLight:
+                    GameFiber.StartNew(() => new BrokenLight(), "Rich Ambiance BrokenLight Event Fiber");
+                    break;
+                case EventType.BrokenWindshield:
+                    GameFiber.StartNew(() => new BrokenWindshield(), "Rich Ambiance BrokenWindshield Event Fiber");
+                    break;
+                case EventType.NoVehicleLights:
+                    GameFiber.StartNew(() => new NoVehicleLights(), "Rich Ambiance NoVehicleLights Event Fiber");
+                    break;
+                case EventType.RecklessDriver:
+                    GameFiber.StartNew(() => new RecklessDriver(), "Rich Ambiance RecklessDriver Event Fiber");
+                    break;
+                case EventType.Speeding:
+                    GameFiber.StartNew(() => new Speeding(), "Rich Ambiance Speeding Event Fiber");
                     break;
                 default:
                     Game.LogTrivial($"{newEvent} is not implemented yet.");

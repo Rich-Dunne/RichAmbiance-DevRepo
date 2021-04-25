@@ -8,8 +8,7 @@ namespace RichAmbiance
     internal static class Settings
     {
         // Feature Settings
-        internal static bool EnableBOLO { get; private set; } = false;
-        internal static bool EnableAmbientEvents { get; private set; } = false;
+        internal static bool EnableAmbientEvents { get; private set; } = true;
 
         // Ambient Event settings
         internal static bool DisableEventsWhilePlayerIsBusy { get; private set; } = false;

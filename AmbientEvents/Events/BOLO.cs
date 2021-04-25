@@ -178,7 +178,6 @@ namespace RichAmbiance.AmbientEvents.Events
             }
             new EventPed(_SuspectVehicle.Driver, Role.PrimarySuspect, this, false);
 
-            Features.AmbientEvents.BOLOActive = true;
             Game.LogTrivial($"[Rich Ambiance (BOLO)]: Suspect vehicle is a {_SuspectVehicle.Model.Name}");
         }
 

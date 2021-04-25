@@ -194,7 +194,11 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void Process()
         {
-            GameFiber.StartNew(() => FadeBOLOStartBlip(), "BOLO Start Blip Fade Fiber");
+            if(Settings.EnableBOLOStartBlip && _StartBlip)
+            {
+                GameFiber.StartNew(() => FadeBOLOStartBlip(), "BOLO Start Blip Fade Fiber");
+            }
+
             DisplayBOLOInfo();
 
             var startTime = Game.GameTime;

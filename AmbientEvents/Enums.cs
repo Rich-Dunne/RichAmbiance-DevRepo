@@ -25,7 +25,8 @@
         BrokenWindshield = 20, // Implemented
         DistractedDriver = 21,
         RecklessDriver = 22, // Implemented
-        Speeding = 23 // Implemented
+        Speeding = 23, // Implemented
+        BOLO = 24
     }
 
     internal enum State

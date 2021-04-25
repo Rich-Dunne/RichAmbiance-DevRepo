@@ -26,7 +26,7 @@ namespace RichAmbiance
 
         public override void Finally()
         {
-            Features.AmbientEvents.ActiveEvent.Cleanup(false);
+            Features.AmbientEvents.ActiveEvents.ForEach(x => x.TransitionToState(AmbientEvents.State.Ending));
         }
 
         private static void InitializeFeatures()

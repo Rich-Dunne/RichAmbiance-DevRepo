@@ -20,9 +20,9 @@ namespace RichAmbiance.AmbientEvents
 
         internal Blip Blip { get; private set; }
 
-        internal EventPed(Ped ped, Role role, bool giveBlip, BlipSprite sprite = BlipSprite.StrangersandFreaks)
+        internal EventPed(Ped ped, Role role, AmbientEvent @event, bool giveBlip, BlipSprite sprite = BlipSprite.StrangersandFreaks)
         {
-            Event = AmbientEvents.ActiveEvent;
+            Event = @event;
             Handle = ped.Handle;
             SetPersistence();
             Role = role;
@@ -37,6 +37,10 @@ namespace RichAmbiance.AmbientEvents
         {
             IsPersistent = true;
             BlockPermanentEvents = true;
+            if(CurrentVehicle)
+            {
+                CurrentVehicle.IsPersistent = true;
+            }
         }
 
         private void CreateBlip(BlipSprite sprite)

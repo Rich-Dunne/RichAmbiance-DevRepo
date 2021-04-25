@@ -204,6 +204,7 @@ namespace RichAmbiance.AmbientEvents.Events
                 GameFiber.Sleep(1000);
                 if(!_SuspectVehicle || !_SuspectVehicle.Driver || !_SuspectVehicle.Driver.IsAlive)
                 {
+                    _SoundPlayer.Play();
                     Game.DisplayNotification($"~r~~h~BOLO ALERT - CANCELLED~h~\n~w~The suspect is dead.");
                     Game.LogTrivial($"[Rich Ambiance (BOLO)]: Vehicle or driver are invalid, or driver is dead.  Ending event.");
                     TransitionToState(State.Ending);

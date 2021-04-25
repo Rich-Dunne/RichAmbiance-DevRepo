@@ -5,6 +5,7 @@ using System.Linq;
 namespace RichAmbiance.AmbientEvents
 { 
     using RichAmbiance.Features;
+    using System;
 
     internal class AmbientEvent
     {
@@ -28,7 +29,8 @@ namespace RichAmbiance.AmbientEvents
             switch (state)
             {
                 case State.Preparing:
-                    AmbientEvents.ActiveEvent = this;
+                    EventType = (EventType)Enum.Parse(typeof(EventType), GetType().Name);
+                    AmbientEvents.ActiveEvents.Add(this);
                     Game.LogTrivial($"[Rich Ambiance]: Beginning {GetType().Name} event.");
                     break;
                 case State.Running:
@@ -39,6 +41,11 @@ namespace RichAmbiance.AmbientEvents
                     Cleanup();
                     break;
             }
+        }
+
+        ~AmbientEvent()
+        {
+            Cleanup(false);
         }
 
         internal void Cleanup(bool smoothEnding = true)
@@ -76,11 +83,16 @@ namespace RichAmbiance.AmbientEvents
                     blip.Delete();
                 }
                 eventPed.BlockPermanentEvents = false;
+                if(eventPed.LastVehicle)
+                {
+                    eventPed.LastVehicle.Dismiss();
+                }
                 eventPed.Dismiss();
             }
             EventPeds.Clear();
 
-            AmbientEvents.ActiveEvent = null;
+            AmbientEvents.ActiveEvents.Remove(this);
+            Game.LogTrivial($"[Rich Ambiance]: {EventType} removed from active events.");
         }
     }
 }

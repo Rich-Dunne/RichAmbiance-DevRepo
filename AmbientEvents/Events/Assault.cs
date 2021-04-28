@@ -80,6 +80,11 @@ namespace RichAmbiance.AmbientEvents.Events
             TransitionToState(State.Running);
             GameFiber.StartNew(() => CheckEndConditions(), "RPE End Conditions Fiber");
 
+            if(new Random().Next(10) % 2 == 0)
+            {
+                GiveSuspectWeapon();
+            }
+
             _suspect.Tasks.FightAgainst(_victim);
             if (new Random().Next(1) == 1 || _victim.Inventory.Weapons.Count > 0)
             {
@@ -89,7 +94,15 @@ namespace RichAmbiance.AmbientEvents.Events
             else
             {
                 _victim.Tasks.Wander();
-                GameFiber.SleepUntil(() => _victim.HasBeenDamagedBy(_suspect), 10000);
+                while(State != State.Ending && _victim && _suspect)
+                {
+                    GameFiber.Yield();
+                    if (_victim.HasBeenDamagedBy(_suspect))
+                    {
+                        break;
+                    }
+                }
+                //GameFiber.SleepUntil(() => _victim.HasBeenDamagedBy(_suspect), 10000); // Invalid exception after event ends
                 if (State == State.Ending)
                 {
                     return;
@@ -152,6 +165,16 @@ namespace RichAmbiance.AmbientEvents.Events
                     _suspect.Blip.Alpha += 0.01f;
                 }
                 _oldDistance = Game.LocalPlayer.Character.DistanceTo2D(_suspect);
+            }
+        }
+
+        private void GiveSuspectWeapon()
+        {
+            WeaponHash[] weaponPool = { WeaponHash.Bat, WeaponHash.Crowbar, WeaponHash.Hammer, WeaponHash.Knife, WeaponHash.Knife };
+            if (_suspect.Inventory.Weapons.Count == 0)
+            {
+                Game.LogTrivial($"[Rich Ambiance] Giving suspect random weapon from pool");
+                _suspect.Inventory.GiveNewWeapon(weaponPool[new Random().Next(0, weaponPool.Length)], 50, true);
             }
         }
     }

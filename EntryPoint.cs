@@ -1,6 +1,8 @@
 ﻿using LSPD_First_Response.Mod.API;
 using Rage;
+using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 [assembly: Rage.Attributes.Plugin("Rich Ambiance", Author = "Rich", Description = "Ambient events for LSPDFR", PrefersSingleInstance = true)]
 
@@ -18,6 +20,7 @@ namespace RichAmbiance
         {
             if (OnDuty)
             {
+                CheckRPEVersion();
                 InitializeFeatures();
                 GetAssemblyVersion();
             }
@@ -27,6 +30,19 @@ namespace RichAmbiance
         public override void Finally()
         {
             Features.AmbientEvents.ActiveEvents.ForEach(x => x.TransitionToState(AmbientEvents.State.Ending));
+        }
+
+        private static void CheckRPEVersion()
+        {
+            if (Functions.GetAllUserPlugins().ToList().Any(a => a.FullName.Contains("RichsPoliceEnhancements")))
+            {
+                var assembly = Thread.GetDomain().GetAssemblies().First(x => x.FullName.Contains("RichsPoliceEnhancements"));
+                Game.LogTrivial($"[RichAmbiance]: RPE version is {assembly.GetName().Version}");
+                if (assembly.GetName().Version < new System.Version(1, 5, 2))
+                {
+                    Game.DisplayNotification($"~o~Rich Ambiance ~r~[Warning]\n~w~In order to avoid conflicts, ~b~Rich's Police Enhancements ~w~needs to be updated.");
+                }
+            }
         }
 
         private static void InitializeFeatures()

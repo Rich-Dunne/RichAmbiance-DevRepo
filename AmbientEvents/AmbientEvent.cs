@@ -91,8 +91,11 @@ namespace RichAmbiance.AmbientEvents
             }
             EventPeds.Clear();
 
-            AmbientEvents.ActiveEvents.Remove(this);
-            Game.LogTrivial($"[Rich Ambiance]: {EventType} removed from active events.");
+            if(AmbientEvents.ActiveEvents.Contains(this))
+            {
+                AmbientEvents.ActiveEvents.Remove(this);
+                Game.LogTrivial($"[Rich Ambiance]: {EventType} removed from active events.");
+            }
         }
     }
 }

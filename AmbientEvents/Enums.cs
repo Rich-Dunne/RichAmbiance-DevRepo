@@ -27,7 +27,8 @@
         RecklessDriver = 22, // Implemented
         Speeding = 23, // Implemented
         BOLO = 24,
-        Fire = 25
+        Fire = 25,
+        ResistingArrest = 26
     }
 
     internal enum State

@@ -60,7 +60,7 @@ namespace RichAmbiance.AmbientEvents.Events
             return;
         }
 
-        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent();
+        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent().Where(x => x.IsAmbient()).ToList();
 
         private void SelectPedPair()
         {
@@ -96,17 +96,12 @@ namespace RichAmbiance.AmbientEvents.Events
                 Game.LogTrivial($"[Rich Ambiance] Giving driver random weapon from pool");
                 _suspect.Inventory.GiveNewWeapon(weaponPool[new Random().Next(0, weaponPool.Length)], 50, true);
             }
-            //foreach (WeaponDescriptor weapon in _suspect.Inventory.Weapons)
-            //{
-            //    Game.LogTrivial($"[Rich Ambiance] Weapon hash: {weapon.Hash}");
-            //}
         }
 
         private void AssignSuspectTasks()
         {
             Game.LogTrivial($"[Rich Ambiance] Driver shooting at victim");
             _suspect.ShootFromVehicle(_victim);
-            //Rage.Native.NativeFunction.Natives.x10AB107B887214D8(_suspect, _victim, 0); // vehicle shoot task
             if (_suspect.Blip)
             {
                 _suspect.Blip.Alpha = 100;

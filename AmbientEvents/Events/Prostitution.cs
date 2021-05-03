@@ -70,7 +70,7 @@ namespace RichAmbiance.AmbientEvents.Events
             return;
         }
 
-        private void CollectNearbyProstitutes() => _prostitutes = HelperMethods.GetReleventPedsForAmbientEvent().Where(p => p.IsOnFoot && p.Model.Name.Contains("HOOKER")).ToList();
+        private void CollectNearbyProstitutes() => _prostitutes = HelperMethods.GetReleventPedsForAmbientEvent().Where(p => p.IsOnFoot && p.IsAmbient() && (p.Model.Name.Contains("HOOKER") || p.Model.Name.Contains("TRANVEST"))).ToList();
 
         private void SelectBestProstitute()
         {

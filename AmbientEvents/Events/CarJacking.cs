@@ -59,7 +59,7 @@ namespace RichAmbiance.AmbientEvents.Events
             return;
         }
 
-        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent();
+        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent().Where(x => x.IsAmbient()).ToList();
 
         private void SelectPedPair()
         {

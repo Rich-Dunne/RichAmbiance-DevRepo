@@ -59,7 +59,7 @@ namespace RichAmbiance.AmbientEvents.Events
             return;
         }
 
-        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent().Where(p => p.IsOnFoot).ToList();
+        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent().Where(p => p.IsOnFoot && p.IsAmbient()).ToList();
 
         private void SelectPedPair()
         {
@@ -94,9 +94,14 @@ namespace RichAmbiance.AmbientEvents.Events
             else
             {
                 _victim.Tasks.Wander();
-                while(State != State.Ending && _victim && _suspect)
+                while(State != State.Ending)
                 {
                     GameFiber.Yield();
+                    if(State == State.Ending)
+                    {
+                        break;
+                    }
+
                     if (_victim.HasBeenDamagedBy(_suspect))
                     {
                         break;

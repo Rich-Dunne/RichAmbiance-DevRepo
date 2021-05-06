@@ -65,6 +65,11 @@ namespace RichAmbiance.AmbientEvents.Events
         {
             foreach (Ped ped in _usablePeds)
             {
+                if(ped.RelationshipGroup == RelationshipGroup.Fireman || ped.RelationshipGroup == RelationshipGroup.Medic || ped.RelationshipGroup.Name == "UBCOP")
+                {
+                    continue;
+                }
+
                 var victim = _usablePeds.FirstOrDefault(p => p != ped && Math.Abs(ped.Position.Z - p.Position.Z) <= 3f && p.DistanceTo2D(ped) <= 10f);
                 if (victim)
                 {

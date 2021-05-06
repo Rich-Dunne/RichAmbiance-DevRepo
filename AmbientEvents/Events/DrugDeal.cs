@@ -63,8 +63,13 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void SelectPedPair()
         {
-            foreach (Ped ped in _usablePeds.Where(p => p.RelationshipGroup == RelationshipGroup.AmbientGangBallas || p.RelationshipGroup == RelationshipGroup.AmbientGangFamily || p.RelationshipGroup == RelationshipGroup.AmbientGangMexican))
+            foreach (Ped ped in _usablePeds)
             {
+                if(ped.RelationshipGroup == RelationshipGroup.AmbientGangBallas || ped.RelationshipGroup == RelationshipGroup.AmbientGangFamily || ped.RelationshipGroup == RelationshipGroup.AmbientGangMexican)
+                {
+                    continue;
+                }
+
                 var victim = _usablePeds.FirstOrDefault(p => p != ped && Math.Abs(ped.Position.Z - p.Position.Z) <= 3f && p.DistanceTo2D(ped) <= 10f);
                 if (victim)
                 {

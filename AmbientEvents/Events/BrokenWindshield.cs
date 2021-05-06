@@ -20,6 +20,8 @@ namespace RichAmbiance.AmbientEvents.Events
             {
                 return;
             }
+
+            TransitionToState(State.Ending, 3000);
         }
 
         private void Prepare()
@@ -31,6 +33,8 @@ namespace RichAmbiance.AmbientEvents.Events
                 TransitionToState(State.Ending);
                 return;
             }
+
+            new EventPed(_suspectVehicle.Driver, Role.PrimarySuspect, this, true);
             Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
@@ -39,7 +43,6 @@ namespace RichAmbiance.AmbientEvents.Events
         private void Process()
         {
             BreakWindshield();
-            TransitionToState(State.Ending);
         }
 
         private void BreakWindshield()

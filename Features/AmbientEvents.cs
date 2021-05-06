@@ -76,6 +76,11 @@ namespace RichAmbiance.Features
                 Game.LogTrivial($"[Rich Ambiance]: Player busy, pursuit active.");
                 return true;
             }
+            else if(Functions.GetCurrentPullover() != null)
+            {
+                Game.LogTrivial($"[Rich Ambiance]: Player busy, pullover active.");
+                return true;
+            }
             else
             {
                 Game.LogTrivial($"[Rich Ambiance]: Player busy state not recognized.");

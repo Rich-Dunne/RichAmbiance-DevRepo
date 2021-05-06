@@ -16,14 +16,14 @@ namespace RichAmbiance.AmbientEvents
 
         internal AmbientEvent() { }
 
-        internal void TransitionToState(State state)
+        internal void TransitionToState(State state, int delay = 0)
         {
             if (State == state)
             {
                 Game.LogTrivial($"State is already {state}");
                 return;
             }
-
+            GameFiber.Sleep(delay);
             State = state;
 
             switch (state)

@@ -182,7 +182,7 @@ namespace RichAmbiance.AmbientEvents.Events
             Game.LogTrivial($"[Rich Ambiance (BOLO)]: Suspect vehicle is a {_SuspectVehicle.Model.Name}");
         }
 
-        private Vehicle FindBOLOVehicle() => World.GetAllVehicles().First(x => x && x.IsCar && !x.IsPoliceVehicle && !x.HasSiren && !x.HasTowArm && x.HasDriver && x.Driver && x.Driver.IsAlive && x.Driver != Game.LocalPlayer.Character && x.Driver.IsAmbient());
+        private Vehicle FindBOLOVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x.IsCar && !x.IsPoliceVehicle && !x.HasSiren && !x.HasTowArm && x.HasDriver && x.Driver && x.Driver.IsAlive && x.Driver != Game.LocalPlayer.Character && x.Driver.IsAmbient());
 
         private void CreateBOLOStartBlip()
         {

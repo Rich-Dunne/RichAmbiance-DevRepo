@@ -43,7 +43,7 @@ namespace RichAmbiance
             EventCooldownTimer = _ini.ReadInt32("Ambient Events", "EventCooldownTimer", 5);
             EventCooldownTimer *= 60000;
             EventBlips = _ini.ReadBoolean("Ambient Events", "EventBlips", true);
-            DisableEventsWhilePlayerIsBusy = _ini.ReadBoolean("Ambient Events", "DisableWhilePlayerBusy", false);
+            DisableEventsWhilePlayerIsBusy = _ini.ReadBoolean("Ambient Events", "DisableEventsWhilePlayerIsBusy", false);
             
             CommonEventFrequency = _ini.ReadInt32("Ambient Events", "CommonEventFrequency", 70);
             UncommonEventFrequency = _ini.ReadInt32("Ambient Events", "UnommonEventFrequency", 20);

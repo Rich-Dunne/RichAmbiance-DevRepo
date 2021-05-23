@@ -8,16 +8,6 @@ namespace RichAmbiance.Utils
 {
     internal static class GuardClauses
     {
-        internal static bool CalloutOrPursuitActive()
-        {
-            if (Functions.IsCalloutRunning() || Functions.GetActivePursuit() != null)
-            {
-                Game.LogTrivial($"[Rich Ambiance]: Callout or pursuit is running.  Ending event.");
-                return true;
-            }
-            return false;
-        }
-
         internal static bool EventPedsFound(IEnumerable<EventPed> eventPeds, int numberOfPedsNeeded, int attempt)
         {
             if (eventPeds.Count() == numberOfPedsNeeded)

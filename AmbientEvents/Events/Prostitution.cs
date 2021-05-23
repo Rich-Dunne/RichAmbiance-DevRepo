@@ -50,12 +50,6 @@ namespace RichAmbiance.AmbientEvents.Events
             for (int i = 0; i < 100; i++)
             {
                 GameFiber.Sleep(500);
-                if (GuardClauses.CalloutOrPursuitActive())
-                {
-                    TransitionToState(State.Ending);
-                    return;
-                }
-
                 if (GuardClauses.EventPedsFound(EventPeds, 1, i))
                 {
                     return;
@@ -70,7 +64,7 @@ namespace RichAmbiance.AmbientEvents.Events
             return;
         }
 
-        private void CollectNearbyProstitutes() => _prostitutes = HelperMethods.GetReleventPedsForAmbientEvent().Where(p => p.IsOnFoot && p.IsAmbient() && (p.Model.Name.Contains("HOOKER") || p.Model.Name.Contains("TRANVEST"))).ToList();
+        private void CollectNearbyProstitutes() => _prostitutes = HelperMethods.GetReleventPedsForAmbientEvent().Where(p => p.IsOnFoot && (p.Model.Name.Contains("HOOKER") || p.Model.Name.Contains("TRANVEST"))).ToList();
 
         private void SelectBestProstitute()
         {

@@ -39,12 +39,6 @@ namespace RichAmbiance.AmbientEvents.Events
             for (int i = 0; i < 100; i++)
             {
                 GameFiber.Sleep(500);
-                if (GuardClauses.CalloutOrPursuitActive())
-                {
-                    TransitionToState(State.Ending);
-                    return;
-                }
-
                 if (GuardClauses.EventPedsFound(EventPeds, 2, i))
                 {
                     return;
@@ -59,7 +53,7 @@ namespace RichAmbiance.AmbientEvents.Events
             return;
         }
 
-        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent().Where(x => x.IsAmbient()).ToList();
+        private void GetUsablePeds() => _usablePeds = HelperMethods.GetReleventPedsForAmbientEvent();
 
         private void SelectPedPair()
         {

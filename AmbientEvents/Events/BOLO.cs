@@ -323,14 +323,14 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private bool UpdateCheck(Ped boloSuspect)
         {
-            var policeVehicleSawBOLOVehicle = boloSuspect.GetNearbyVehicles(16).Where(x => x && x.IsPoliceVehicle && x.HasDriver && x.Driver.IsAlive && x.DistanceTo2D(_SuspectVehicle) <= 50f).FirstOrDefault();
+            var policeVehicleSawBOLOVehicle = boloSuspect.GetNearbyVehicles(16).FirstOrDefault(x => x && x.IsPoliceVehicle && x.HasDriver && x.Driver.IsAlive && x.DistanceTo2D(_SuspectVehicle) <= 50f);
             if (policeVehicleSawBOLOVehicle)
             {
                 Game.LogTrivial("[Rich Ambiance (BOLO)]: Police vehicle saw suspect.");
                 return true;
             }
 
-            var policePedSawBOLOVehicle = boloSuspect.GetNearbyPeds(16).Where(x => x && x.IsAlive && x.RelationshipGroup == "COP" && x.DistanceTo2D(_SuspectVehicle) <= 50f).FirstOrDefault();
+            var policePedSawBOLOVehicle = boloSuspect.GetNearbyPeds(16).FirstOrDefault(x => x && x.IsAlive && x.RelationshipGroup == "COP" && x.DistanceTo2D(_SuspectVehicle) <= 50f);
             if (policePedSawBOLOVehicle)
             {
                 Game.LogTrivial("[Rich Ambiance (BOLO)]: Police ped saw suspect.");

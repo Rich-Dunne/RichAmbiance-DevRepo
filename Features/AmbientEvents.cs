@@ -34,11 +34,11 @@ namespace RichAmbiance.Features
             Game.LogTrivial($"[Rich Ambiance]: Common events: {CommonEvents.Count}, Uncommon events: {UncommonEvents.Count}, Rare events: {RareEvents.Count}");
             Game.LogTrivial($"[Rich Ambiance]: Common Frequency: {Settings.CommonEventFrequency}, Uncommon Frequency: {Settings.UncommonEventFrequency}, Rare Frequency: {100 - Settings.RareEventFrequency}");
 
-            GameFiber.StartNew(() => BeginLoopingForMinorEvents(), "RichAmbiance Minor Event Loop Fiber");
-            GameFiber.StartNew(() => BeginLoopingForEvents(), "RichAmbiance Major Event Loop Fiber");
+            GameFiber.StartNew(() => LoopForMinorEvents(), "RichAmbiance Minor Event Loop Fiber");
+            GameFiber.StartNew(() => LoopForPrimaryEvents(), "RichAmbiance Primary Event Loop Fiber");
         }
 
-        private static void BeginLoopingForEvents()
+        private static void LoopForPrimaryEvents()
         {
             Game.LogTrivial($"[Rich Ambiance]: Ambient event loop initialized.");
             while (true)
@@ -54,12 +54,17 @@ namespace RichAmbiance.Features
             }
         }
 
-        private static void BeginLoopingForMinorEvents()
+        private static void LoopForMinorEvents()
         {
             Game.LogTrivial($"[Rich Ambiance]: Minor ambient event loop initialized.");
             while (true)
             {
                 GameFiber.Sleep(new Random().Next(MINOR_AMBIENT_EVENT_MINIMUM_DELAY, MINOR_AMBIENT_EVENT_MAXIMUM_DELAY));
+                if (Settings.DisableEventsWhilePlayerIsBusy && PlayerIsBusy())
+                {
+                    Game.LogTrivial($"[Rich Ambiance]: The player is busy, try again later.");
+                    continue;
+                }
                 TryStartMinorEvent();
             }
         }
@@ -81,9 +86,14 @@ namespace RichAmbiance.Features
                 Game.LogTrivial($"[Rich Ambiance]: Player busy, pullover active.");
                 return true;
             }
+            else if(!Functions.IsPlayerAvailableForCalls())
+            {
+                Game.LogTrivial($"[Rich Ambiance]: Player busy, not available for calls.");
+                return true;
+            }
             else
             {
-                Game.LogTrivial($"[Rich Ambiance]: Player busy state not recognized.");
+                Game.LogTrivial($"[Rich Ambiance]: Player is not busy.");
                 return false;
             }
         }

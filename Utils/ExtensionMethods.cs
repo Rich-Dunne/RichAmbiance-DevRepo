@@ -9,35 +9,29 @@ namespace RichAmbiance.Utils
         internal static bool IsAmbient(this Ped ped)
         {
             // Universal tasks (virtually all peds seem have this)
-            var taskAmbientClips = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 38);
+            bool taskAmbientClips = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 38);
 
             // Universal on-foot tasks (virtually all ambient walking peds seem to have this)
-            var taskComplexControlMovement = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 35);
+            bool taskComplexControlMovement = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 35);
 
             // Universal in-vehicle tasks (virtually all ambient driver peds seem to have this)
-            var taskInVehicleBasic = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 150);
-            var taskCarDriveWander = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 151);
+            bool taskInVehicleBasic = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 150);
+            bool taskCarDriveWander = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 151);
 
             // On-foot ambient tasks
-            var taskPolice = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 58); // From ambient cop (non-freemode) walking around
-            var taskWanderingScenario = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 100); // From ambient cop walking around
-            var taskUseScenario = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 118); // From ambient cop standing still
+            bool taskPolice = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 58); // From ambient cop (non-freemode) walking around
+            bool taskWanderingScenario = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 100); // From ambient cop walking around
+            bool taskUseScenario = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 118); // From ambient cop standing still
+
+            // On foot controlled tasks
             var taskScriptedAnimation = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 134); // From UB ped waiting for interaction
 
             // In-vehicle controlled tasks
             var taskControlVehicle = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped, 169); // From backup unit driving to player
 
             // Ped is in a vehicle
-            if (taskInVehicleBasic)
+            if (ped.CurrentVehicle)
             {
-                //Game.LogTrivial($"Ped is in a vehicle.");
-                // Ped has a controlled driving task
-                if (taskControlVehicle)
-                {
-                    //Game.LogTrivial($"Ped has a controlled driving task. (non-ambient)");
-                    return false;
-                }
-
                 // Ped has a wander driving task
                 if (taskCarDriveWander)
                 {
@@ -46,11 +40,14 @@ namespace RichAmbiance.Utils
                 }
 
                 // If the ped is in a vehicle but doesn't have a driving task, then it's a passenger.  Check if the vehicle's driver has a driving wander task
-                var driverHasWanderTask = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped.CurrentVehicle.Driver, 151);
-                if (driverHasWanderTask)
+                if (ped.CurrentVehicle.Driver && ped.CurrentVehicle.Driver != ped)
                 {
-                    //Game.LogTrivial($"Ped is a passenger.  Vehicle's driver has a wander driving task. (ambient)");
-                    return true;
+                    var driverHasWanderTask = Rage.Native.NativeFunction.Natives.GET_IS_TASK_ACTIVE<bool>(ped.CurrentVehicle.Driver, 151);
+                    if (driverHasWanderTask)
+                    {
+                        //Game.LogTrivial($"Ped is a passenger.  Vehicle's driver has a wander driving task. (ambient)");
+                        return true;
+                    }
                 }
             }
 
@@ -130,7 +127,7 @@ namespace RichAmbiance.Utils
         /// </summary>
         internal static bool IsRelevantForAmbientEvent(this Ped ped)
         {
-            if (ped && ped.IsAlive && ped.Position.DistanceTo(Game.LocalPlayer.Character.Position) < 100f && !ped.IsPlayer && !ped.IsInjured && !ped.Model.Name.Contains("A_C") && ped.RelationshipGroup != RelationshipGroup.Cop)
+            if (ped.IsAlive && ped.Position.DistanceTo(Game.LocalPlayer.Character.Position) < 100f && !ped.IsPlayer && !ped.IsInjured && !ped.Model.Name.Contains("A_C") && ped.RelationshipGroup != RelationshipGroup.Cop)
             {
                 return true;
             }

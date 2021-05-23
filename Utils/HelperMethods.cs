@@ -6,6 +6,6 @@ namespace RichAmbiance.Utils
 {
     internal static class HelperMethods
     {
-        internal static List<Ped> GetReleventPedsForAmbientEvent() => World.GetAllPeds().Where(p => p.IsRelevantForAmbientEvent()).ToList();
+        internal static List<Ped> GetReleventPedsForAmbientEvent() => World.GetAllPeds().Where(p => p.IsRelevantForAmbientEvent() && p.IsAmbient()).ToList();
     }
 }

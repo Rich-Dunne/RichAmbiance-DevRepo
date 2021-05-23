@@ -44,9 +44,8 @@ namespace RichAmbiance.AmbientEvents.Events
         private void Process()
         {
             _suspectVehicle.Driver.Tasks.Clear();
-            //_suspectVehicle.Driver.Tasks.CruiseWithVehicle(new Random().Next(10, 50), VehicleDrivingFlags.Emergency);
             _suspectVehicle.Driver.Tasks.DriveToPosition(new Vector3(new Random().Next(1000), new Random().Next(1000), 0), new Random().Next(5, 31), VehicleDrivingFlags.Emergency);
-            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect is driving carelessly.");
+            Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect is driving recklessly.");
         }
     }
 }

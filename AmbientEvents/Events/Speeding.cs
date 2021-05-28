@@ -40,7 +40,7 @@ namespace RichAmbiance.AmbientEvents.Events
             Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
-        private Vehicle FindEventPed() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
+        private Vehicle FindEventPed() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && (x.IsCar || x.IsBike) && !x.HasSiren && x.HasDriver && x.Driver && x.Driver.IsAmbient());
 
         private void Process()
         {

@@ -3,8 +3,6 @@ using System.Drawing;
 
 namespace RichAmbiance.AmbientEvents
 {
-    using RichAmbiance.Features;
-
     enum Role
     {
         PrimarySuspect = 0,
@@ -14,15 +12,15 @@ namespace RichAmbiance.AmbientEvents
 
     internal class EventPed : Ped
     {
-        internal AmbientEvent Event { get; private set; }
+        internal AmbientEvent AmbientEvent { get; private set; }
 
         internal Role Role { get; private set; }
 
         internal Blip Blip { get; private set; }
 
-        internal EventPed(Ped ped, Role role, AmbientEvent @event, bool giveBlip, BlipSprite sprite = BlipSprite.StrangersandFreaks)
+        internal EventPed(Ped ped, Role role, AmbientEvent ambientEvent, bool giveBlip, BlipSprite sprite = BlipSprite.StrangersandFreaks) : base(ped.Handle)
         {
-            Event = @event;
+            AmbientEvent = ambientEvent;
             Handle = ped.Handle;
             SetPersistence();
             Role = role;
@@ -30,7 +28,7 @@ namespace RichAmbiance.AmbientEvents
             {
                 CreateBlip(sprite);
             }
-            Event.EventPeds.Add(this);
+            AmbientEvent.EventPeds.Add(this);
         }
 
         private void SetPersistence()
@@ -50,7 +48,7 @@ namespace RichAmbiance.AmbientEvents
             if (Role == Role.PrimarySuspect)
             {
                 Blip.Color = Color.Red;
-                if (Event.EventType == EventType.DriveBy)
+                if (AmbientEvent.EventType == EventType.DriveBy)
                 {
                     Blip.Alpha = 0;
                 }
@@ -60,7 +58,22 @@ namespace RichAmbiance.AmbientEvents
                 Blip.Color = Color.White;
             }
             Blip.Scale = 0.75f;
-            Event.EventBlips.Add(Blip);
+            AmbientEvent.EventBlips.Add(Blip);
+        }
+
+        internal void Dismiss()
+        {
+            if(Blip)
+            {
+                Blip.Delete();
+            }
+
+            if(LastVehicle)
+            {
+                LastVehicle.Dismiss();
+            }
+
+            base.Dismiss();
         }
     }
 }

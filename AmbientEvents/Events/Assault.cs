@@ -98,7 +98,7 @@ namespace RichAmbiance.AmbientEvents.Events
                     GameFiber.Yield();
                     if(State == State.Ending)
                     {
-                        break;
+                        return;
                     }
 
                     if (_victim.HasBeenDamagedBy(_suspect))

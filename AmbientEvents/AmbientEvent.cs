@@ -78,15 +78,15 @@ namespace RichAmbiance.AmbientEvents
             // Clean up EventPeds
             foreach (EventPed eventPed in EventPeds.Where(x => x))
             {
-                foreach (Blip blip in eventPed.GetAttachedBlips().Where(b => b))
-                {
-                    blip.Delete();
-                }
-                eventPed.BlockPermanentEvents = false;
-                if(eventPed.LastVehicle)
-                {
-                    eventPed.LastVehicle.Dismiss();
-                }
+                //foreach (Blip blip in eventPed.GetAttachedBlips().Where(b => b))
+                //{
+                //    blip.Delete();
+                //}
+                //eventPed.BlockPermanentEvents = false;
+                //if(eventPed.LastVehicle)
+                //{
+                //    eventPed.LastVehicle.Dismiss();
+                //}
                 eventPed.Dismiss();
             }
             EventPeds.Clear();

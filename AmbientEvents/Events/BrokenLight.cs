@@ -46,7 +46,7 @@ namespace RichAmbiance.AmbientEvents.Events
             Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Suspect vehicle is a {_suspectVehicle.Model.Name}");
         }
 
-        private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.HasDriver && x.Driver && x.IsCar && !x.HasSiren);
+        private Vehicle GetRandomVehicle() => World.GetAllVehicles().FirstOrDefault(x => x && x != Game.LocalPlayer.Character.CurrentVehicle && x.IsCar && !x.HasSiren && x.HasDriver && x.Driver && x.Driver.IsAmbient());
 
         private void Process()
         {
@@ -101,34 +101,49 @@ namespace RichAmbiance.AmbientEvents.Events
 
         private void DamageVehicles(Vehicle vehicleToCopy, string brokenLight)
         {
-            var boneIndex = vehicleToCopy.GetBoneIndex(brokenLight);
-            var bonePosition = vehicleToCopy.GetBonePosition(boneIndex);
+            Vector3 bonePosition = new Vector3();
+            try
+            {
+                var boneIndex = vehicleToCopy.GetBoneIndex(brokenLight);
+                bonePosition = vehicleToCopy.GetBonePosition(boneIndex);
+            }
+            catch(Exception ex)
+            {
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)] Error: {ex.Message}");
+                TransitionToState(State.Ending);
+            }
+
+            if(State == State.Ending)
+            {
+                return;
+            }
+
             switch (brokenLight)
             {
                 case "taillight_l":
                 case "taillight_r":
                     NativeWrappers.SetVehicleDamage(vehicleToCopy, vehicleToCopy.GetPositionOffset(bonePosition), 100, 50, true);
-                    Game.LogTrivial($"[Rich Ambiance]: Breaking a taillight.");
+                    Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Breaking a taillight.");
                     break;
                 case "headlight_l":
                     NativeWrappers.SetVehicleDamage(vehicleToCopy, vehicleToCopy.FrontPosition.GetOffset(vehicleToCopy.Heading, new Vector3(-2, 5, 1)), 150, 50, false);
-                    Game.LogTrivial($"[Rich Ambiance]: Breaking left headlight.");
+                    Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Breaking left headlight.");
                     break;
                 case "headlight_r":
                     NativeWrappers.SetVehicleDamage(vehicleToCopy, vehicleToCopy.FrontPosition.GetOffset(vehicleToCopy.Heading, new Vector3(15, 50, 3)), 110, 100, false);
-                    Game.LogTrivial($"[Rich Ambiance]: Breaking right headlight.");
+                    Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Breaking right headlight.");
                     break;
             }
 
             GameFiber.Sleep(1000);
             if(!vehicleToCopy)
             {
-                Game.LogTrivial($"[Rich Ambiance]: Vehicle to copy is invalid");
+                Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Vehicle to copy is invalid");
                 TransitionToState(State.Ending);
                 return;
             }
             NativeWrappers.CopyVehicleDamages(vehicleToCopy, _suspectVehicle);
-            //Game.LogTrivial($"Damage copied to target vehicle.");
+            //Game.LogTrivial($"[Rich Ambiance (Minor Event)]: Damage copied to target vehicle.");
         }
     }
 }

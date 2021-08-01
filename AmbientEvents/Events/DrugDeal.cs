@@ -72,7 +72,7 @@ namespace RichAmbiance.AmbientEvents.Events
         private void Process()
         {
             TransitionToState(State.Running);
-            GameFiber.StartNew(() => CheckEndConditions(), "RPE End Conditions Fiber");
+            GameFiber.StartNew(() => CheckEndConditions(), "Rich Ambiance DrugDeal End Conditions Fiber");
 
             AssignDealerTasks();
             AssignBuyerTasks();

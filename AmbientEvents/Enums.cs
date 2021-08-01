@@ -23,12 +23,11 @@
         NoVehicleLights = 18, // Implemented
         BrokenLight = 19, // Implemented
         BrokenWindshield = 20, // Implemented
-        DistractedDriver = 21,
-        RecklessDriver = 22, // Implemented
-        Speeding = 23, // Implemented
-        BOLO = 24,
-        Fire = 25,
-        ResistingArrest = 26
+        RecklessDriver = 21, // Implemented
+        Speeding = 22, // Implemented
+        BOLO = 23, // Implemented
+        Fire = 24,
+        ResistingArrest = 25
     }
 
     internal enum State
@@ -41,6 +40,7 @@
 
     internal enum EventFrequency
     {
+        On = -1,
         Off = 0,
         Common = 1,
         Uncommon = 2,

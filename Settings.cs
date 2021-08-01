@@ -18,12 +18,21 @@ namespace RichAmbiance
         internal static int CommonEventFrequency { get; private set; } = 70;
         internal static int UncommonEventFrequency { get; private set; } = 20;
         internal static int RareEventFrequency { get; private set; } = CommonEventFrequency + UncommonEventFrequency;
+
+        // Primary events
         internal static EventFrequency AssaultFrequency { get; private set; } = EventFrequency.Off;
         internal static EventFrequency CarJackingFrequency { get; private set; } = EventFrequency.Off;
         internal static EventFrequency DrugDealFrequency { get; private set; } = EventFrequency.Off;
         internal static EventFrequency DriveByFrequency { get; private set; } = EventFrequency.Off;
         internal static EventFrequency ProstitutionFrequency { get; private set; } = EventFrequency.Off;
         internal static EventFrequency BOLOFrequency { get; private set; } = EventFrequency.Off;
+
+        // Minor events
+        internal static EventFrequency BrokenLightFrequency { get; private set; } = EventFrequency.Off;
+        internal static EventFrequency BrokenWindshieldFrequency { get; private set; } = EventFrequency.Off;
+        internal static EventFrequency NoVehicleLightsFrequency { get; private set; } = EventFrequency.Off;
+        internal static EventFrequency RecklessDriverFrequency { get; private set; } = EventFrequency.Off;
+        internal static EventFrequency SpeedingFrequency { get; private set; } = EventFrequency.Off;
 
         // BOLO Settings
         internal static bool EnableBOLOStartBlip { get; private set; } = false;
@@ -45,22 +54,35 @@ namespace RichAmbiance
             EventBlips = _ini.ReadBoolean("Ambient Events", "EventBlips", true);
             DisableEventsWhilePlayerIsBusy = _ini.ReadBoolean("Ambient Events", "DisableEventsWhilePlayerIsBusy", false);
             
-            CommonEventFrequency = _ini.ReadInt32("Ambient Events", "CommonEventFrequency", 70);
-            UncommonEventFrequency = _ini.ReadInt32("Ambient Events", "UnommonEventFrequency", 20);
+            CommonEventFrequency = _ini.ReadInt32("Ambient Events", "CommonEventChance", 70);
+            UncommonEventFrequency = _ini.ReadInt32("Ambient Events", "UnommonEventChance", 20);
             ValidateFrequencySettings();
             
-            AssaultFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "AssaultFrequency", "off"), true);
+            // Primary events
+            AssaultFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "Assault", "off"), true);
             EventFrequencies.Add(EventType.Assault, AssaultFrequency);
-            CarJackingFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "CarJackingFrequency", "off"), true);
+            CarJackingFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "CarJacking", "off"), true);
             EventFrequencies.Add(EventType.CarJacking, CarJackingFrequency);
-            DrugDealFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "DrugDealFrequency", "off"), true);
+            DrugDealFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "DrugDeal", "off"), true);
             EventFrequencies.Add(EventType.DrugDeal, DrugDealFrequency);
-            DriveByFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "DriveByFrequency", "off"), true);
+            DriveByFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "DriveBy", "off"), true);
             EventFrequencies.Add(EventType.DriveBy, DriveByFrequency);
-            ProstitutionFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "ProstitutionFrequency", "off"), true);
+            ProstitutionFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "Prostitution", "off"), true);
             EventFrequencies.Add(EventType.Prostitution, ProstitutionFrequency);
-            BOLOFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "BOLOFrequency", "off"), true);
+            BOLOFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "BOLO", "off"), true);
             EventFrequencies.Add(EventType.BOLO, BOLOFrequency);
+
+            // Minor events
+            BrokenLightFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "BrokenLight", "off"), true);
+            EventFrequencies.Add(EventType.BrokenLight, BrokenLightFrequency);
+            BrokenWindshieldFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "BrokenWindow", "off"), true);
+            EventFrequencies.Add(EventType.BrokenWindshield, BrokenWindshieldFrequency);
+            NoVehicleLightsFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "NoVehicleLights", "off"), true);
+            EventFrequencies.Add(EventType.NoVehicleLights, NoVehicleLightsFrequency);
+            RecklessDriverFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "RecklessDriver", "off"), true);
+            EventFrequencies.Add(EventType.RecklessDriver, RecklessDriverFrequency);
+            SpeedingFrequency = (EventFrequency)Enum.Parse(typeof(EventFrequency), _ini.ReadString("Ambient Events", "Speeding", "off"), true);
+            EventFrequencies.Add(EventType.Speeding, SpeedingFrequency);
 
             // BOLO Settings
             EnableBOLOStartBlip = _ini.ReadBoolean("BOLO Settings", "EnableBOLOStartBlip", false);

@@ -13,14 +13,7 @@ namespace RichAmbiance.Features
         internal static List<EventType> CommonEvents { get; private set; } = new List<EventType>();
         internal static List<EventType> UncommonEvents { get; private set; } = new List<EventType>();
         internal static List<EventType> RareEvents { get; private set; } = new List<EventType>();
-        internal static List<EventType> MinorEvents { get; private set; } = new List<EventType>()
-        {
-            EventType.BrokenLight,
-            EventType.BrokenWindshield,
-            EventType.NoVehicleLights,
-            EventType.RecklessDriver,
-            EventType.Speeding
-        };
+        internal static List<EventType> MinorEvents { get; private set; } = new List<EventType>();
         internal static List<AmbientEvent> ActiveEvents { get; private set; } = new List<AmbientEvent>();
 
         private const int MINOR_AMBIENT_EVENT_MINIMUM_DELAY = 60000;
@@ -31,7 +24,8 @@ namespace RichAmbiance.Features
             CommonEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == EventFrequency.Common).Select(x => x.Key).ToList());
             UncommonEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == EventFrequency.Uncommon).Select(x => x.Key).ToList());
             RareEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == EventFrequency.Rare).Select(x => x.Key).ToList());
-            Game.LogTrivial($"[Rich Ambiance]: Common events: {CommonEvents.Count}, Uncommon events: {UncommonEvents.Count}, Rare events: {RareEvents.Count}");
+            MinorEvents.AddRange(Settings.EventFrequencies.Where(x => x.Value == EventFrequency.On).Select(x => x.Key).ToList());
+            Game.LogTrivial($"[Rich Ambiance]: Common events: {CommonEvents.Count}, Uncommon events: {UncommonEvents.Count}, Rare events: {RareEvents.Count}, Minor events: {MinorEvents.Count}");
             Game.LogTrivial($"[Rich Ambiance]: Common Frequency: {Settings.CommonEventFrequency}, Uncommon Frequency: {Settings.UncommonEventFrequency}, Rare Frequency: {100 - Settings.RareEventFrequency}");
 
             GameFiber.StartNew(() => LoopForMinorEvents(), "RichAmbiance Minor Event Loop Fiber");
